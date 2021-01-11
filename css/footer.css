@@ -1,0 +1,60 @@
+/* ============================================
+           footer
+    =========================================== */
+footer{
+    min-height: 50px;
+}
+body{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+footer{
+    margin-top: auto;
+}
+.footer {
+    padding: 10px;
+}
+.footer-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #333333;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    display: inline-block;
+}
+/* ============================================
+           Footer Social Icons
+    =========================================== */
+/* social icons in Footer */
+ul.social-list {
+    padding: 0;
+    float: right;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+ul.social-list li {
+    display: inline-block;
+    padding: 0;
+}
+ul.social-list li a {
+    border: 1px solid #6255a5;
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    line-height: 35px;
+    color: #fff;
+    background-color: #6255a5;
+    border-radius: 50%;
+    -webkit-transition: all 400ms linear;
+    transition: all 400ms linear;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

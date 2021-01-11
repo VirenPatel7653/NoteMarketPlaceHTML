@@ -1,0 +1,46 @@
+/* ============================================
+          FAQ Collapse
+    =========================================== */
+.card-collapse {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #d1d1d1 !important;
+}
+.card-collapse h2 a {
+    text-decoration: none;
+    -webkit-text-decoration-color: none;
+    text-decoration-color: none;
+    font-family: "Open Sans";
+    font-size: 18px;
+    line-height: 22px;
+    color: #333333;
+}
+.card-collapse h2 a i {
+    width: 16px;
+    height: 2px;
+    color: #a6a6a6;
+    padding: 10px;
+}
+.card-collapse-heading {
+    font-weight: 400;   
+}
+.card-header-white {
+    background-color: #fff;
+    border-bottom: none;
+}
+.card-header-white-text {
+    text-decoration: none !important;
+    -webkit-text-decoration-color: none !important;
+    text-decoration-color: none !important;
+    font-family: "Open Sans"!important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    line-height: 22px !important;
+    color: #333333 !important;
+}
+.card-body-collapse {
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}

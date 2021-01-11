@@ -1,0 +1,32 @@
+
+/* ============================================
+            Pagination  
+    =========================================== */
+.page-link {
+    border: none !important;
+    color: #333333 !important;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-right: 20px;
+    margin-top: 25px;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.page-link:hover,
+.page-link:focus {
+    background: none;
+}
+.page-active:hover,
+.page-active:focus,
+.page-active {
+    width: 34px;
+    height: 34px;
+    color: #fff !important;
+    background-color: #6255a5;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 50%;
+    line-height: 20px;
+}

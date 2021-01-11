@@ -1,0 +1,66 @@
+/* ============================================
+           header
+    =========================================== */
+/* White navigation  */
+.white-nav-top {
+    width: 100% !important;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
+}
+/* White navigation */
+.white-nav {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #333333;
+    margin-right: 10px;
+}
+.nav-active {
+    width: 50px;
+    color: #6255a5;
+    padding-bottom: 6px;
+    border-bottom: 3px solid #6255a5;
+}
+/* Home Page Navigation */
+.home-nav {
+    color: #fff;
+    margin-right: 15px;
+}
+/* Profile icon */
+.avatar-sm {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.custom-dropdown {
+    margin-left: -60px;
+}
+.custom-dropdown .dropdown-item:not(:last-child):hover, 
+.custom-dropdown .dropdown-item:not(:last-child):focus {
+    background-color: #6255a5;
+    color: #fff;  
+}
+.dropdown-item {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}
+.drop-logout {
+    color: #6255a5;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+}
+.drop-logout:hover {
+    background-color: #fff;
+    color: #6255a5;
+}
+.custom-mobile-dropdown .dropdown-item:hover,
+.custom-mobile-dropdown .dropdown-item:focus {
+    background-color: #6255a5;
+    color: #fff;  
+    
+}
