@@ -1,0 +1,705 @@
+/* ============================================
+            Html,Body
+    =========================================== */
+/* Generic Fonts */
+* {
+    font-family: "Open Sans" ,sans-serif;
+}
+html,body {
+    height: 100vh;
+    margin: 0;
+    width: 100%;
+}
+/* For Container */
+.container {
+    max-width: 1440px;
+}
+/* ============================================
+            Buttons
+    =========================================== */
+.btn-general {
+    color: #fff;
+    font-size: 18px;
+    line-height: 22px;
+    background-color: #6255a5;
+    height: 45px;
+    border-radius: 3px;
+    margin-top: 30px;
+    font-weight: 600;
+}
+.btn-general:hover,
+.btn-general:focus {
+    color: #fff;
+}
+.btn-home {
+    color: #6255a5;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: #ffffff;
+    height: 45px;
+    border-radius: 3px;
+    margin-top: 30px;
+    font-weight: 700;
+}
+.btn-home:hover,
+.btn-home:focus {
+    color: #6255a5;
+}
+.home-banner-button {
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+}
+/* ===============================================================================================
+                        Login Page,Change Password,Forgot Password,Sign Up
+    =============================================================================================== */
+/* background image */
+.bg-image {
+    height: auto;
+    width: 100%;
+    margin: 0;
+    background-image: url('../images/pre-login/banner-with-overlay.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: scroll;
+}
+.card-body {
+    width: auto;
+}
+.heading {
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 38px;
+    color: #6255a5;
+    margin-bottom: 20px;
+}
+.sub-heading {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #333333;
+    margin-bottom: 45px;
+}
+/* Forgot password link */
+.forgot {
+    float: right;
+}
+.forgot a {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #6255a5;
+}
+label {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+.card input[type=email] {
+    margin-bottom: 30px;
+}
+input {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card .form-check-input {
+    border: 1px solid #d1d1d1;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+}
+
+.card ::-webkit-input-placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+    padding-right: 20px;
+
+}
+
+.card :-ms-input-placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+    padding-right: 20px;
+
+}
+
+.card ::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+    padding-right: 20px;
+
+}
+.form-control:focus {
+    border-color: #6255a5;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    height: 50px;
+    border-radius: 3px;
+}
+/* Error message in red */
+.card .error {
+    border-style: none;
+    border: 1px solid #ff5e5e;
+    height: 50px;
+    border-radius: 3px;
+}
+.card .error-msg {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 20px;
+    color: #ff3636;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+/* icon */
+.card .field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -38px;
+    margin-right: 10px;
+    position: relative;
+    z-index: 2;
+}
+/* change password*/
+.card .field-icon-change {
+    float: right;
+    margin-left: -25px;
+    margin-top: -35px;
+    margin-right: 10px;
+    position: relative;
+    z-index: 2;
+}
+.card .links {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+    margin-top: 20px;
+}
+.card .links a {
+    color: #6255a5;
+}
+/* ============================================
+            User Profile Page
+    =========================================== */
+/* Drop down Arrow Image */
+input {
+    height: 50px!important;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../images/User-Profile/down-arrow.png") white no-repeat 98.5% !important;
+    background: url("../images/User-Profile/down-arrow.png") white no-repeat calc(100% - 10px) !important;
+    height: 50px!important;
+
+}
+select::-ms-expand {
+    display: none;
+}
+/* For Banner Image */
+.user-profile-banner {
+    background-image: url('../images/User-Profile/banner-with-overlay.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.user-profile-banner h1 {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 52px;
+    color: #ffffff;
+}
+/* Form for user profile */
+.field-heading {
+    margin-top: 60px;
+}
+.form-placeholder ::-webkit-input-placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+}
+.form-placeholder :-ms-input-placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+}
+.form-placeholder ::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+}
+/* ============================================
+            Email Verification Page
+    =========================================== */
+.bg-email-verification {
+    height: auto;
+    width: 100%;
+    margin: 0;
+    background-color: #000;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: scroll;
+}
+.email-verification .heading {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 30px;
+    color: #6255a5;
+    margin-bottom: 20px;
+}
+.email-verification .sub-heading, 
+.thanks-popup .sub-heading {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+.custom-file-box {
+    text-align: center;
+    border: 1px solid #d1d1d1;
+    display: block;
+}
+/* ============================================
+            Home Page
+    =========================================== */
+.home-banner {
+    background-image: url('../images/home/banner-with-overlay.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.home-banner-align {
+    vertical-align: middle;
+}
+.home-banner-text {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #ffffff;
+}
+.home-banner-heading {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 54px;
+    color: #ffffff;
+}
+/* home about section */
+.about-para {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}
+.home-rounded-img-wrap {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+      -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+}
+.home-rounded-img-wrap i {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 25px;
+    height: 140px;
+}
+.about-sub-heading {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    color: #6255a5;
+}
+/* home customer section */
+.customer-card {
+    padding: 40px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
+    max-width: 540px;
+    margin-bottom: 30px;
+    margin-right: 30px;
+}
+/* ============================================
+            Search Page
+    =========================================== */
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+.custom-select-drop {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+    height: 50px;
+    padding: 10px;
+    padding-right: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.note-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 26px;
+    min-height: 80px;
+    color: #6255a5;
+}
+.book-card {
+    border: 1px solid #d1d1d1;
+    margin-bottom: 30px;
+}
+.card-detail {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+    margin-bottom: 15px;
+}
+/* Ratings */
+span.stars {
+    width: 10px;
+    height: 16px;
+    display: inline;
+}
+span.stars i {
+    height: 20px;
+    margin-right: 2px;
+}
+span.stars  {
+    background-position: 0 0;
+}
+
+/* ============================================
+            Note Details 
+    =========================================== */
+.note-details-heading {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    color: #6255a5;
+    margin-bottom: 20px;
+}
+.note-details-subheading {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #333333;
+    margin-bottom: 30px;
+}
+.note-details-para {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #333333;
+    margin-top: 0px;
+}
+.notes-left,
+.notes-right {
+    font-size: 18px;
+    line-height: 36px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.notes-left {
+    font-weight: 400;
+    color: #333333;
+}
+.notes-right {
+    font-weight: 600;
+    color: #6255a5;
+}
+.report-msg {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #d43434;
+}
+.customer-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;    
+}
+.customer-name {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+.customer-para {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #333333;
+}
+/* ============================================
+            Note Details  iframe
+    =========================================== */
+.responsive-wrapper {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+}
+.responsive-wrapper img,
+.responsive-wrapper object,
+.responsive-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+     border: 1px solid #d1d1d1;
+    border-radius: 3px;
+}
+.responsive-wrapper-padding-bottom-90pct {
+    padding-bottom: 90%;
+}
+/* ============================================
+            Dashboard Page
+    =========================================== */
+.dashboard-card {
+    min-height: 150px;
+    margin-bottom: 30px;
+}
+.dashboard-card-heading {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 34px;
+    color: #6255a5;
+}
+.dashboard-card-text {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}
+.has-search .form-control {
+    height: 50px;
+}
+/* ============================================
+            Add Notes Page
+    =========================================== */
+.custom-radio {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #d1d1d1;
+    margin-right: 10px;
+}
+input[type="radio"]:checked {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    display: inline-block;
+    background-clip: content-box;
+    padding: 6px;
+    outline-style: none;
+    border: 1px solid #6255a5;
+    background-color: #6255a5;
+    border-radius: 50%;
+    
+}
+.select-text{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+}
+.image-upload > input {
+    display: none;
+}
+.image-upload img {
+    width: 80px;
+    cursor: pointer;
+}
+/* ============================================
+          Add Review Popup Rating
+    =========================================== */
+.rate {
+    float: left;
+    padding: 0;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:45px;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:45px;
+    line-height: 50px;
+    color:#ccc;
+    margin-top: 0px;
+    margin-right: 20px;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+.cl {
+    color: #d1d1d1;
+}
+.cl:hover {
+    outline-style: none;
+}
+.popup-margin {
+    margin-top: 200px;
+}
+/* ============================================
+          Thank you Popup
+    =========================================== */
+.thanks-popup .para {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}
+
+/* ============================================
+          Admin Css
+    =========================================== */
+
+/* ============================================
+          Admin Dashboard
+    =========================================== */
+.custom-other-dropdown {
+    margin-left: -60px;
+}
+.custom-other-dropdown .dropdown-item:hover, 
+.custom-other-dropdown .dropdown-item:focus {
+    background-color: #6255a5;
+    color: #fff;  
+}
+.custom-has-search input[type="text"] {
+    width: 69%;
+}
+/* ============================================
+          Admin Member Detail
+    =========================================== */
+.member-details .notes-left,
+.member-details .notes-right {
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.member-details .notes-left {
+    font-weight: 400;
+    color: #333333;
+}
+.member-details .notes-right {
+    font-weight: 600;
+    color: #6255a5;
+    text-align: left;
+}
+/* ============================================
+        Notes Under Review
+    =========================================== */
+.btn-approve,
+.btn-reject,
+.btn-inreview {
+    border-radius: 3px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+}
+.btn-approve {
+    background-color: #28a745;
+}
+.btn-reject {
+    background-color: #ff3636;
+}
+.btn-inreview {
+    background-color: #cccccc;
+}
+input.focused {
+    border:3px solid blue;
+}
+
+.input-validation-error {
+    border : 2px solid red;
+}
+
+.field-validation-error {
+    color:red;
+}

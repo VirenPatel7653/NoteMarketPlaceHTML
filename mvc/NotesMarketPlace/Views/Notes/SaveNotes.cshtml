@@ -1,0 +1,236 @@
+﻿@model NotesMarketPlace.Models.AddNoteModel
+@{
+    ViewBag.Title = "SaveNotes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main role="main" class="pt-5">
+    <!-- Top Section-->
+    <div class="jumbotron jumbotron-fluid user-profile-banner d-flex justify-content-center align-items-center" style="height: 250px;">
+        <div class="container text-center">
+            <h1>Add Notes</h1>
+        </div>
+    </div>
+    <!-- Top Section End-->
+    <!-- User Profile Form-->
+    <div class="container form-placeholder" style="margin-bottom: 60px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="heading field-heading ">Basic Note Details</h1>
+                @if (ViewBag.Message != null)
+                {
+                    <h4 class="text-danger text-center mb-2"><i class="fa fa-times-circle-o"></i> @ViewBag.Message</h4>
+
+                }
+            </div>
+        </div>
+
+        @using (Html.BeginForm("SaveNotes", "Notes", FormMethod.Post, new
+        {
+            enctype = "multipart/form-data"
+        }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Title) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control focus", placeholder = "Enter your notes title" })
+                        @Html.ValidationMessageFor(m => m.Title)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Category) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.DropDownListFor(m => m.Category, new SelectList(Model.CategoryList, "Value", "Text"), htmlAttributes: new { @class = "form-control select-text" })
+                        @Html.ValidationMessageFor(m => m.Category)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="profile">Display Picture</label>
+                        <label for="file-input-display" style="display: block;">
+                            <div class="image-upload custom-file-box py-4">
+                                <img src="@Url.Content("~/Content/images/Add-notes/upload-file.png")" width="40px" height="60px" alt="uploadpicture" />
+                                <figcaption id="displaypicture" class="select-text">Upload a Picture</figcaption>
+                                <input id="file-input-display" type="file" accept="image/*" name="DisplayPicture" onchange="showname(this,'displaypicture')" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                     
+
+                        @Html.LabelFor(m => m.UploadNotes)<sup class="text-danger">*</sup>
+
+                        <label for="file-input" style="display: block;">
+                            <div class="image-upload custom-file-box py-4">
+                                <img src="@Url.Content("~/Content/images/Add-notes/upload-note.png")" width="40px" height="60px" alt="uploadpicture" />
+                                <figcaption id="uploadpicture" class="select-text">Upload your notes</figcaption>
+                                @Html.TextBoxFor(m => m.UploadNotes, new
+                           {
+                               @id = "file-input",
+                               @type = "file",
+                               @onchange = "showname(this,'uploadpicture')",
+                               @required = "required"
+                           })
+
+                                @*<input id="file-input" type="file" name="UploadNotes" onchange="showname(this,'uploadpicture')" />*@
+                            </div>
+                        </label>
+                        @Html.ValidationMessageFor(m => m.UploadNotes)
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NoteType)
+                        @Html.DropDownListFor(m => m.NoteType, new SelectList(Model.TypeList, "Value", "Text"), htmlAttributes: new { @class = "form-control select-text" })
+                        @Html.ValidationMessageFor(m => m.NoteType)
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NumberofPages)
+                        @Html.TextBoxFor(m => m.NumberofPages, new { @class = "form-control focus", placeholder = "Enter number of note pages" })
+                        @Html.ValidationMessageFor(m => m.NumberofPages)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control focus", placeholder = "Enter your description", style = "height: 100px;" })
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading">Institution Information</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Country)
+                        @Html.DropDownListFor(m => m.Country, new SelectList(Model.CountryList, "Value", "Text"), htmlAttributes: new { @class = "form-control select-text" })
+                        @Html.ValidationMessageFor(m => m.Country)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UniversityName)
+                        @Html.TextBoxFor(m => m.UniversityName, new { @class = "form-control focus", placeholder = "Enter your institution name" })
+                        @Html.ValidationMessageFor(m => m.UniversityName)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading">Course Details</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Course)
+                        @Html.TextBoxFor(m => m.Course, new { @class = "form-control focus", placeholder = "Enter your course name" })
+                        @Html.ValidationMessageFor(m => m.Course)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CourseCode)
+                        @Html.TextBoxFor(m => m.CourseCode, new { @class = "form-control focus", placeholder = "Enter your course code" })
+                        @Html.ValidationMessageFor(m => m.CourseCode)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Professor)
+                        @Html.TextBoxFor(m => m.Professor, new { @class = "form-control focus", placeholder = "Enter your professor name" })
+                        @Html.ValidationMessageFor(m => m.Professor)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading">Selling Information</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IsPaid)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.ValidationMessageFor(m => m.IsPaid)
+
+                        <br>
+                        @foreach (var mode in Model.SellingModeList)
+                        {
+                            <div class="form-check form-check-inline">
+                                @Html.RadioButtonFor(m => m.IsPaid, mode.Value, new { @class = "custom-radio" })
+                                @Html.Label(mode.Text, new { @class = "form-check-label mr-4" })
+
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(m => m.SellingPrice) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.SellingPrice, new { @class = "form-control focus", placeholder = "Enter your price" })
+                        @Html.ValidationMessageFor(m => m.SellingPrice)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="profile">Note Preview</label>
+                            <label for="file-input-preview" style="display: block;">
+                                <div class="image-upload custom-file-box py-4">
+                                    <img src="@Url.Content("~/Content/images/Add-notes/upload-file.png")" width="40px" height="50px" alt="uploadpicture" />
+                                    <figcaption id="previewpicture" class="select-text">Upload a file</figcaption>
+                                    <input id="file-input-preview" type="file" name="NotesPreview" onchange="showname(this,'previewpicture')" />
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+
+                    <button type="submit" class="btn  btn-general   mt-2 px-3 py-1 mr-4" style="width: 150px;" name="submit" value="Save">SAVE</button>
+                    <button type="submit" class="btn btn-general mt-2 px-3 py-1" style="width: 150px;" name="submit" value="Publish">PUBLISH</button>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- User Profile Form End-->
+</main>
+
+@section Scripts
+{
+    <!--Upload Picture JS-->
+    <script type="text/javascript">
+        function showname(e, idname) {
+            var name = e.files;
+
+            for (var i = 0; i < name.length; i++) {
+                document.getElementById(idname).innerHTML = `${name[i].name}`;
+            }
+        }
+    </script>
+}
+
+@Scripts.Render("~/bundles/jqueryval")

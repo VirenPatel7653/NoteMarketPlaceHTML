@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+<!-- About Section-->
+<div class="container" style="margin-top: 60px;margin-bottom: 60px;">
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="heading">About<br>NotesMarketPlace</h1>
+        </div>
+        <div class="col-md-6">
+            <p class="about-para" style="margin-bottom:50px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea rerum doloribus assumenda asperiores est quisquam totam tenetur. Voluptatum expedita cumque, vero consequuntur dolorum deserunt, minus iusto aperiam delectus aliquid harum?</p>
+
+            <p class="about-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea rerum doloribus assumenda asperiores est quisquam totam tenetur. Voluptatum expedita cumque, vero consequuntur.</p>
+        </div>
+    </div>
+</div>
+<!-- About Section End-->
+<!--How it Works section-->
+<div class="jumbotron jumbotron-fluid" style="background-color: #F9F9F9;">
+    <div class="container" style="margin-top: 60px;margin-bottom: 60px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="heading text-center">How it Works</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 text-center home-work mb-4 mb-lg-0">
+                    <div class="home-rounded-img-wrap">
+
+                        <i>
+                            <img src="@Url.Content("~/Content/images/home/download.png")" alt="Download image" class="img-responsive home-rounded-img">
+                        </i>
+
+                    </div>
+                    <h6 class="about-sub-heading">Download Free/Paid Notes</h6>
+                    <p class="about-para">Get Material for your<br />Course etc.</p>
+                    <a class="nav-link" href="@Url.Action("SearchNotes","Notes")"><button type="button" class="btn btn-general btn-sm mt-0 px-4">DOWNLOAD</button></a>
+
+                </div>
+                <div class="col-md-4 text-center home-work mb-4 mb-lg-0">
+
+                    <div class="home-rounded-img-wrap">
+
+                        <i>
+                            <img src="@Url.Content("~/Content/images/home/seller.png")" alt="Seller image" class="img-responsive home-rounded-img">
+                        </i>
+                    </div>
+
+
+                    <h6 class="about-sub-heading">Seller</h6>
+                    <p class="about-para">Upload and Download Course<br />and Materials etc.</p>
+                    <a class="nav-link" href="@Url.Action("SellYourNotes","Notes")"><button type="button" class="btn btn-general btn-sm mt-0 px-4">SELL BOOK</button></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--How it Works section End-->
+<!--Customer Satisfaction Section-->
+<div class="container" style="margin-top: 60px;margin-bottom: 60px;">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h1 class="heading text-center">What our Customers are Saying</h1>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <!-- Customer Card 1-->
+        <div class="col-md-6 col-sm-12 text-center">
+            <div class="card  customer-card">
+                <div class="row no-gutters">
+
+                    <div class="col-md-3">
+                        <img src="@Url.Content("~/Content/images/home/customer-1.png")" class="rounded-circle" width="100px" height="100px" alt="...">
+                    </div>
+                    <div class="col-md-9 text-lg-left">
+                        <div class="card-body">
+                            <h5 class="heading mb-1">Walter Meller</h5>
+                            <p class="sub-heading mb-0">Founder & CEO, Matrix Group</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters pl-3 mt-0">
+                    <div class="col-md-12 text-lg-left text-md-left">
+                        <p class="about-para" style="line-height: 28px;"><i>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea rerum doloribus assumenda asperiores est quisquam totam asperiores est quisquam totam"</i> </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Customer Card 2-->
+        <div class="col-md-6 col-sm-12 text-center">
+            <div class="card  customer-card">
+                <div class="row no-gutters">
+
+                    <div class="col-md-3">
+                        <img src="@Url.Content("~/Content/images/home/customer-2.png")" class="rounded-circle" width="100px" height="100px" alt="...">
+                    </div>
+                    <div class="col-md-9 text-lg-left">
+                        <div class="card-body">
+                            <h5 class="heading mb-1">Jonnie Riley</h5>
+                            <p class="sub-heading mb-0">Employee,Curious Snakcs</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters pl-3 mt-0">
+                    <div class="col-md-12 text-lg-left text-md-left">
+                        <p class="about-para" style="line-height: 28px;"><i>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea rerum doloribus assumenda asperiores est quisquam totam asperiores est quisquam totam"</i> </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Customer Card 3-->
+        <div class="col-md-6 col-sm-12 text-center">
+            <div class="card customer-card">
+                <div class="row no-gutters">
+
+                    <div class="col-md-3">
+                        <img src="@Url.Content("~/Content/images/home/customer-3.png")" class="rounded-circle" width="100px" height="100px" alt="...">
+                    </div>
+                    <div class="col-md-9 text-lg-left">
+                        <div class="card-body">
+                            <h5 class="heading mb-1">Amillia Luna</h5>
+                            <p class="sub-heading mb-0">Teacher,Saint Joseph High School</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters pl-3 mt-0">
+                    <div class="col-md-12 text-lg-left text-md-left">
+                        <p class="about-para" style="line-height: 28px;"><i>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea rerum doloribus assumenda asperiores est quisquam totam asperiores est quisquam totam"</i> </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Customer Card 4-->
+        <div class="col-md-6 col-sm-12 text-center">
+            <div class="card mb-3 customer-card">
+                <div class="row no-gutters">
+
+                    <div class="col-md-3">
+                        <img src="@Url.Content("~/Content/images/home/customer-4.png")" class="rounded-circle" width="100px" height="100px" alt="...">
+                    </div>
+                    <div class="col-md-9 text-lg-left">
+                        <div class="card-body">
+                            <h5 class="heading mb-1">Daniel Cardos</h5>
+                            <p class="sub-heading mb-0">Software Engineer,Infinitum Company</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters pl-3 mt-0">
+                    <div class="col-md-12 text-lg-left text-md-left">
+                        <p class="about-para" style="line-height: 28px;"><i>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea rerum doloribus assumenda asperiores est quisquam totam asperiores est quisquam totam"</i> </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Customer Satisfaction Section End-->

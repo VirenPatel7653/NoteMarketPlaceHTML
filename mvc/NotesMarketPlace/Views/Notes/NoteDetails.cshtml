@@ -1,0 +1,261 @@
+﻿@model NotesMarketPlace.Models.NoteViewModel
+@{
+    ViewBag.Title = "NoteDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main role="main" class="pt-5">
+    <div class="container" style="margin-top: 70px;">
+        <!-- Heading -->
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="note-details-heading">Notes Details</h1>
+            </div>
+        </div>
+        <!-- Heading End-->
+        <!-- Note Details -->
+        <div class="row">
+            <div class="col-xl-6 col-md-6 col-sm-12">
+                <div class="card mb-3" style="border: none;">
+                    <div class="row no-gutters">
+                        <div class="col-md-5">
+                            <img src="@Url.Content("~/"+Model.DisplayPicture)" class="card-img img-responsive" alt="...">
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h1 class="heading mt-1">@Model.Title</h1>
+                                <p class="note-details-subheading">@Model.Category</p>
+                                <p class="note-details-para">@Model.Description</p>
+
+                                @if (Request.IsAuthenticated)
+                                {
+                                    if (Model.IsPaid == "Paid")
+                                    {
+
+                                        <button type="button" class="btn btn-general px-3 dowbtn" onclick="confirmpaid()">DOWNLOAD / $ @Model.SellingPrice</button>
+
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-general px-3 dowbtn" onclick="location.href ='@Url.Action("DownloadNote","Notes",new {id =@Model.ID,uploadNotes =@Model.UploadNotes ,uploadNotesName=@Model.UploadNotesName})' ">DOWNLOAD</button>
+
+
+                                    }
+                                }
+                                else
+                                {
+
+                                    if (Model.IsPaid == "Paid")
+                                    {
+                                        <button type="button" class="btn btn-general px-3 dowbtn" onclick="$('#test').show();">DOWNLOAD / $ @Model.SellingPrice</button>
+
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-general px-3 dowbtn" onclick="$('#test').show();">DOWNLOAD </button>
+
+
+                                    }
+                                    <h5 class="mt-2" id="test">Please <a href="@Url.Action("Login","Account")">Sign in</a> / <a href="@Url.Action("SignUp","Account")">Register</a> to download this note.</h5>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-6 col-sm-12">
+                <table class="table table-borderless table-sm">
+                    <tbody>
+
+                        @if (Model.UniversityName != null)
+                        {
+                            <tr>
+                                <td scope="row" class="text-left notes-left">Institution:</td>
+                                <td class="text-right notes-right">@Model.UniversityName</td>
+                            </tr>
+                        }
+                        @if (Model.Country != null)
+                        {
+
+                            <tr>
+                                <td scope="row" class="text-left notes-left ">Country:</td>
+                                <td class="text-right notes-right">@Model.Country</td>
+                            </tr>
+                        }
+                        @if (Model.Course != null)
+                        {
+                            <tr>
+                                <td scope="row" class="text-left notes-left">Course Name:</td>
+                                <td class="text-right notes-right">@Model.Course</td>
+                            </tr>
+                        }
+                        @if (Model.CourseCode != null)
+                        {
+                            <tr>
+                                <td scope="row" class="text-left notes-left">Course Code:</td>
+                                <td class="text-right notes-right">@Model.CourseCode</td>
+                            </tr>
+                        }
+                        @if (Model.Professor != null)
+                        {
+                            <tr>
+                                <td scope="row" class="text-left notes-left">Professor:</td>
+                                <td class="text-right notes-right">@Model.Professor</td>
+                            </tr>
+                        }
+                        @if (Model.NumberofPages != null)
+                        {
+                            <tr>
+                                <td scope="row" class="text-left notes-left">Number Of Pages:</td>
+                                <td class="text-right notes-right">@Model.NumberofPages</td>
+                            </tr>
+                        }
+                        @if (Model.PublishedDate != null)
+                        {
+                            <tr>
+                                <td scope="row" class="text-left notes-left">Approved Date:</td>
+                                <td class="text-right notes-right">@Model.PublishedDate.ToShortDateString()</td>
+                            </tr>
+                        }
+
+                        <tr>
+
+                            @if (Model.Rating != 0 && Model.NoOfReviews != 0)
+                            {
+                                <td scope="row" class="text-left notes-left">Rating:</td>
+                                <td class="text-right notes-right">
+                                    <span class="stars" data-rating=@Model.Rating data-num-stars="5"></span>
+
+                                    <span>@Model.NoOfReviews reviews</span>
+                                </td>
+
+                            }
+                        </tr>
+                        @if (Model.CountOfSpamReport != 0)
+                        {
+                            <tr>
+                                <td colspan="2" scope="row" class="report-msg ">@Model.CountOfSpamReport Users marked this note as inappropriate</td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Note Details End -->
+
+        <hr>
+
+    </div>
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            @if (Model.NotesPreview != null)
+            {
+                <div class="col-xl-6 col-md-12 col-sm-12">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Heading -->
+                            <h1 class="note-details-heading">Notes Preview</h1>
+                            <!-- Heading End-->
+                        </div>
+                        <div class="col-md-12">
+                            <!-- responsive iframe -->
+                            <div class="responsive-wrapper responsive-wrapper-padding-bottom-90pct" style="-webkit-overflow-scrolling: touch; overflow: auto; min-height: 550px;">
+                                <iframe src="@Url.Content("~/"+@Model.NotesPreview)">
+                                    <p style="font-size: 110%;">
+                                        <em>
+                                            <strong>ERROR: </strong>
+                                            An &#105;frame should be displayed here but your browser version does not support &#105;frames.
+                                        </em> Please update your browser to its most recent version and try again, or access the file <a href="http://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf">with this link.</a>
+                                    </p>
+                                </iframe>
+                            </div>
+                            <!-- responsive iframe end -->
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+
+
+            <div class="col-xl-6 col-md-12 col-sm-12 mt-3 mt-lg-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Heading -->
+                        <h1 class="note-details-heading">Customers Reviews</h1>
+                        <!-- Heading End -->
+                    </div>
+                    <div class="col-md-12">
+                        <!-- Customer Card -->
+                        <div class="card" style=" min-height: 550px;">
+                            <div class="card-body">
+                                <div class="media">
+                                    <img src="@Url.Content("~/Content/images/Notes-Details/reviewer-1.png")" class="align-self-start mr-3 rounded-circle customer-img" alt="...">
+                                    <div class="media-body">
+                                        <h1 class="customer-name">Richard Brown</h1>
+                                        <span class="stars" data-rating="4" data-num-stars="5"></span>
+                                        <p class="customer-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel at distinctio dolor facere a vero dolor facere a vero minus.</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="media">
+                                    <img src="@Url.Content("~/Content/images/Notes-Details/reviewer-2.png")" class="align-self-start mr-3 rounded-circle customer-img" alt="...">
+                                    <div class="media-body">
+                                        <h1 class="customer-name">Alice Ortiaz</h1>
+                                        <span class="stars" data-rating="4" data-num-stars="5"></span>
+                                        <p class="customer-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel at distinctio dolor facere a vero dolor facere a vero minus.</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="media">
+                                    <img src="@Url.Content("~/Content/images/Notes-Details/reviewer-3.png")" class="align-self-start mr-3 rounded-circle customer-img" alt="...">
+                                    <div class="media-body">
+                                        <h1 class="customer-name">Sara Passmore</h1>
+                                        <span class="stars" data-rating="4" data-num-stars="5"></span>
+                                        <p class="customer-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel at distinctio dolor facere a vero dolor facere a vero minus.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Customer Card End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.stars').stars();
+            $('#test').hide();
+        });
+
+        function confirmpaid() {
+            swal({
+                title: "Are you sure?",
+                text: "you want to download this Paid note. Please confirm.",
+                icon: "info",
+                buttons: ["No","Yes"],
+                
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("You have to Pay $ @Model.SellingPrice and wait for seller's confirmation", {
+                            icon: "success",
+                           
+                        }).then(function() {
+                            window.location = "@Url.Action("DownloadPaidNotes","Notes",new {id = @Model.ID, uploadNotes= @Model.UploadNotes})";
+                        });
+                    } 
+                });
+        }
+
+    </script>
+
+}

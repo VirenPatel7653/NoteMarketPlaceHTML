@@ -1,0 +1,236 @@
+﻿@model NotesMarketPlace.Models.UserProfileModel
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main role="main" class="pt-5">
+
+    <!-- Top Section-->
+    <div class="jumbotron jumbotron-fluid user-profile-banner d-flex justify-content-center align-items-center" style="height: 250px;">
+        <div class="container text-center">
+            <h1>User Profile</h1>
+        </div>
+    </div>
+    <!-- Top Section End-->
+    <!-- User Profile Form-->
+    <div class="container form-placeholder">
+        @using (Html.BeginForm("UserProfile", "User", FormMethod.Post, new
+        {
+            enctype = "multipart/form-data"
+        }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading ">Basic Profile Details</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control focus", placeholder = "Enter your first name" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        @Html.LabelFor(m => m.LastName)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control focus", placeholder = "Enter your last name" })
+                        @Html.ValidationMessageFor(m => m.LastName)
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmailID) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.EmailID, new { @class = "form-control focus", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(m => m.EmailID)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dob">Date Of Birth</label>
+                        <div class="input-group date">
+                            <!-- Accepts the input from calendar -->
+                            <input class="form-control dobdate" style="border-right:none;" type="text" name="dob" placeholder="Enter your date of birth" id="dob">
+                            <!-- Sets the calendar icon -->
+                            <span class="input-group-prepend ">
+                                <span class="input-group-text bg-white" style="border-left:none;">
+                                    <img src="@Url.Content("~/Content/images/User-Profile/calendar.png")" onclick="setDatepicker(this)" alt="">
+                                </span>
+                            </span>
+                            @Html.ValidationMessageFor(m => m.DOB)
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        @Html.DropDownListFor(m => m.Gender , new SelectList(Model.GenderList, "Value", "Text"),htmlAttributes: new { @class = "form-control select-text" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="row">
+                            <div class="col-md-3 mb-2 mb-lg-0 ">
+                                @Html.DropDownListFor(m => m.Phonenumber_CountryCode, new SelectList(Model.CountryList,"Value","Text"), htmlAttributes: new { @class = "form-control select-text" })
+                                @Html.ValidationMessageFor(m => m.Phonenumber_CountryCode)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Phonenumber, new { @class = "form-control focus", placeholder = "Enter your Phone Number" })
+                                @Html.ValidationMessageFor(m => m.Phonenumber)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Profile Picture</label>
+                        <label for="file-input" style="display: block;">
+
+                            <div class="image-upload custom-file-box py-4">
+                                <img src=@Url.Content("~/Content/images/User-Profile/upload.png") width="40px" height="60px" alt="uploadpicture" />
+                                <figcaption id="uploadpicture" class="select-text">Upload a Picture</figcaption>
+                                <input id="file-input" type="file" accept="image/*" name="ProfilePicture" onchange="showname(this)" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading">Address Details</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.AddressLine1)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-control focus", placeholder = "Enter your address" })
+                        @Html.ValidationMessageFor(m => m.AddressLine1)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.AddressLine2)
+                        @Html.TextBoxFor(m => m.AddressLine2, new { @class = "form-control focus", placeholder = "Enter your address" })
+                        @Html.ValidationMessageFor(m => m.AddressLine2)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.City)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control focus", placeholder = "Enter your City" })
+                        @Html.ValidationMessageFor(m => m.City)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.State)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.State, new { @class = "form-control focus", placeholder = "Enter your State" })
+                        @Html.ValidationMessageFor(m => m.State)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ZipCode)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control focus mb-0", placeholder = "Enter your ZipCode" })
+                        @Html.ValidationMessageFor(m => m.ZipCode)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Country)<sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.Country, new { @class = "form-control focus mb-0", placeholder = "Enter your Country" })
+                        @Html.ValidationMessageFor(m => m.Country)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading">University and College Information</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.University)
+                        @Html.TextBoxFor(m => m.University, new { @class = "form-control focus", placeholder = "Enter your University" })
+                        @Html.ValidationMessageFor(m => m.University)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.College)
+                        @Html.TextBoxFor(m => m.College, new { @class = "form-control focus", placeholder = "Enter your College" })
+                        @Html.ValidationMessageFor(m => m.College)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.HiddenFor(m => m.UserID)
+                 
+                    <button type="submit" class="btn btn-general mt-2 mb-5 px-5 py-1">SUBMIT</button>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- User Profile Form End-->
+</main>
+@section Scripts
+{
+    <script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js")"></script>
+    <script type="text/javascript">
+        function showname(e) {
+            var name = e.files;
+            document.getElementById("uploadpicture").innerHTML = name[0].name
+        }
+
+        function setDatepicker(_this) {
+
+            /* Get the parent class name so we
+                can show date picker */
+            let className = $(_this).parent()
+                .parent().parent().attr('class');
+
+            // Remove space and add '.'
+            let removeSpace = className.replace(' ', '.');
+
+            // jQuery class selector
+            $("." + removeSpace).datepicker({
+                format: "dd/mm/yyyy",
+
+                // Positioning where the calendar is placed
+                orientation: "bottom auto",
+                // Calendar closes when cursor is
+                // clicked outside the calendar
+                autoclose: true,
+                showOnFocus: "false"
+            });
+        }
+
+    </script>
+}

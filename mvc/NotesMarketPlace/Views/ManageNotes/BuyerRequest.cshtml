@@ -1,0 +1,145 @@
+﻿@model IEnumerable<NotesMarketPlace.Models.BuyerRequestsModel>
+@{
+    ViewBag.Title = "BuyerRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render() {
+<style>
+    table tr td:first-child {
+        text-align: center;
+    }
+    table thead tr th {
+        border: hidden !important;
+    }
+</style>
+
+}
+
+
+<main role="main" class="pt-5">
+    <div class="container">
+        <!-- Table Heading -->
+        <div class="row mb-2" style="margin-top: 60px;">
+            <div class="col-md-6">
+                <h1 class="dashboard-table-heading mt-2">Buyer Requests</h1>
+            </div>
+            <div class="col-md-6 ">
+                <div class="row no-gutters float-right">
+                    <form class="form-inline my-2 my-lg-0">
+                        <div class="form-group has-search mb-0">
+
+                            <span class="fa fa-search form-control-feedback"></span>
+
+                            <input type="search" class="form-control" id="searchinput" placeholder="Search">
+                        </div>
+
+                        <button type="button" id="searchbtn" class="btn btn-general btn-sm mt-0 ml-3  text-uppercase">Search</button>
+                    </form>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- Table Heading End -->
+        <!-- Table  -->
+        <div class="table-responsive ">
+            <table id="buyerrequest" class="table custom-table cutom-column" data-pagination="true">
+
+                <thead>
+                    <tr>
+                        <th class="text-center">SR NO.</th>
+                        <th>NOTE TITLE</th>
+                        <th>CATEGORY</th>
+                        <th>BUYER</th>
+                        <th>PHONE NO.</th>
+                        <th>SELL TYPE</th>
+                        <th>PRICE</th>
+                        <th>DOWNLOADED DATE/TIME</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var b in Model)
+                    {
+                        <tr>
+
+                            <td>@i</td>
+                            <td>@b.Title</td>
+                            <td>@b.Category</td>
+                            <td>@b.Buyer</td>
+                            <td>@b.BuyerPhoneNumber</td>
+                            <td>@b.SellType</td>
+                            <td>$ @b.SellingPrice</td>
+                            <td>@b.DownloadedDate</td>
+
+                            <td>
+                                <a href='@Url.Action("NoteDetails", "Notes", new { id = @b.NoteID })'>
+                                    <img src="@Url.Content("~/Content/images/Dashboard/eye.png")" class="mr-2" width="30px" height="15px" alt="edit">
+                                </a>
+                            </td>
+                            <td>
+                                <div class="dropdown dropleft">
+
+                                    <i class="fa fa-ellipsis-v " id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #d1d1d1"></i>
+                                    <div class="dropdown-menu menu-dropdown" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="@Url.Action("AllowDownload", "ManageNotes", new { id = @b.ID })">Allow Download</a>
+                                    </div>
+                                </div>
+                            </td>
+
+
+                        </tr>
+                        i++;
+
+                    }
+                  
+                   
+                </tbody>
+            </table>
+        </div>
+        <!-- Table End -->
+      
+        </div>
+
+
+</main>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+           
+            var table = $('#buyerrequest').DataTable({
+                "pageLength":5,
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-right fa-2x"></i>',
+                        previous: ' <i class="fa fa-angle-left fa-2x"></i>',
+                        first: false,
+                        last: false
+                    }
+                },
+                bFilter: false,
+                ordering: false,
+                searching: true,
+                "dom": '<"top">rt<"bottom"p>'
+         
+            });
+            $('.dataTables_length').addClass('bs-select');
+        
+
+            $("#searchbtn").click(function () {
+                var x = $("#searchinput").val();
+                table.search(x).draw();
+            });
+
+        });
+       
+    </script>
+}

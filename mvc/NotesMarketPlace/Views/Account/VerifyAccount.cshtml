@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Verify Account";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="bg-image">
+        <div class="container  h-100">
+            <div class="row align-items-center h-100">
+                <!--  Box for signup Content-->
+                <div class="col-xs-12 col-sm-12 col-md-6 mx-auto">
+                    <div class="h-100 justify-content-center d-flex" style="flex-direction: column;">
+
+                        <div class="col-md-12 text-center my-3">
+                            <img src="@Url.Content("~/Content/images/pre-login/top-logo.png")" class="img-responsive logo" alt="marketplace">
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body m-0">
+                                <div class="container-fluid ">
+
+
+
+
+
+
+                                    @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <h1 class="heading text-center">Success</h1>
+                                            </div>
+                                            <h3 class="text-success text-center mb-2"><i class="fa fa-check-circle"></i>Your Account is successfully verified.</h3>
+                                        </div>
+                                        <p class="text-center links">Already have an account?<a href='@Url.Action("Login","Account")'> Login</a></p>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <h1 class="heading text-center">Error</h1>
+                                            </div>
+                                            <h3 class="text-danger text-center mb-2"><i class="fa fa-times-circle-o"></i>Please verify your account thorugh valid email. </h3>
+                                        </div>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  Box for signup Content End-->
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/js")
+
+</body>
+</html>
