@@ -3,9 +3,11 @@ using NotesMarketPlace.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -229,16 +231,30 @@ namespace NotesMarketPlace.Controllers
         {
             var verifyUrl = "/Account/VerifyAccount/" + user.ActivationCode.ToString();
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-
-            var fromEmail = new MailAddress("virenpatel7653@gmail.com", "Note Marketplace");
             var toEmail = new MailAddress(user.EmailID);
-            var fromEmailPassword = "Mahadev@7653"; // Replace with actual password
             string subject = "Note Marketplace - Email Verification";
 
-            string body = "Hello "+user.FirstName+" "+user.LastName+" ,"+
+            string body1 = "Hello "+user.FirstName+" "+user.LastName+" ,"+
                 "<br/>Thank you for signing up with us. Please click on below link to verify your email address and to do login."
                 +" <br/><br/><a href='" + link + "'>Verify Email Address link </a><br/>Regards,<br/>Notes Marketplace";
-
+            var email = ConfigurationManager.AppSettings["username"].ToString();
+            var passsword = ConfigurationManager.AppSettings["password"].ToString();
+            var fromEmail = new MailAddress(email, "Note Marketplace");
+            var fromEmailPassword = passsword;
+            var mail = new MailMessage(fromEmail, toEmail);
+            mail.Subject = subject;
+            string filePath = Server.MapPath(Url.Content("~/EmailTemplates/EmailVerification.html"));
+            StreamReader str = new StreamReader(filePath);
+            string body = str.ReadToEnd();
+            str.Close();
+            body = body.Replace("[Username]", user.FirstName);
+            body = body.Replace("[link]", link);
+            AlternateView altView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
+            string imageSource = Server.MapPath(Url.Content("~/Content/images/User-Profile/logo.png"));
+            LinkedResource PictureRes = new LinkedResource(imageSource, MediaTypeNames.Image.Jpeg);
+            PictureRes.ContentId = "YourPictureId";
+            altView.LinkedResources.Add(PictureRes);
+            mail.AlternateViews.Add(altView);
             var smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
@@ -248,14 +264,7 @@ namespace NotesMarketPlace.Controllers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
             };
-
-            using (var message = new MailMessage(fromEmail, toEmail)
-            {
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
-            })
-                smtp.Send(message);
+            smtp.Send(mail);
         }
 
         [NonAction]
