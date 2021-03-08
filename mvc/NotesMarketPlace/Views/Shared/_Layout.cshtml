@@ -63,7 +63,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><img src='@Url.Content("~/Content/images/Add-notes/user-img.png")' alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-3" style="margin-right: 10px;"></a>
+                                <a class="nav-link" href="#"><img  src=""  alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-3 dp" style="margin-right: 10px;"></a>
                             </li>
                             using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
                             {
@@ -113,7 +113,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><img src='@Url.Content("~/Content/images/Add-notes/user-img.png")' alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-0" style="margin-right: 10px;"></a>
+                            <a class="nav-link" href="#"><img src="" alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-0 dp" style="margin-right: 10px;"></a>
                         </li>
                         using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
                         {
@@ -149,9 +149,9 @@
 
             <p class="footer-text">Copyright &copy; TatvaSoft All right reserved.</p>
             <ul class="social-list ">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a id="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a id="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a id="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
             </ul>
         </div>
     </footer>
@@ -163,5 +163,28 @@
     @Scripts.Render("~/bundles/js")
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
+
+    <script>
+    $(function () {
+
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: '@Url.Action("Footer", "Home")',
+            type: "Post"
+        })
+            .done(function (d) {
+                $("#linkedin").attr("href", d.LNICON);
+                $("#facebook").attr("href", d.FBICON);
+                $("#twitter").attr("href", d.TWITTERICON);
+                if (d.DefaultMemberDisplayPicture != null) {
+                    $(".dp").attr("src","/"+d.DefaultMemberDisplayPicture);
+                }
+
+            });
+    });
+    </script>
+
+
 </body>
 </html>

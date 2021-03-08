@@ -129,9 +129,9 @@
 
             <p class="footer-text">Copyright &copy; TatvaSoft All right reserved.</p>
             <ul class="social-list ">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a id="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a id="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a id="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
             </ul>
         </div>
     </footer>
@@ -143,5 +143,23 @@
     @Scripts.Render("~/bundles/js")
     @Scripts.Render("~/bundles/headerjs")
     @RenderSection("scripts", required: false)
+<script>
+    $(function () {
+       
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: '@Url.Action("Footer", "Home")',
+            type: "Post"
+        })
+            .done(function (d) {
+                $("#linkedin").attr("href", d.LNICON);    
+                $("#facebook").attr("href", d.FBICON);    
+                $("#twitter").attr("href", d.TWITTERICON);    
+            });
+    });
+</script>
+
+
 </body>
 </html>

@@ -57,6 +57,34 @@ namespace NotesMarketPlace.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Footer()
+        {
+            ManageConfigurationModel model = new ManageConfigurationModel();
+            model.FBICON = dbObj.SystemConfigurations.Where(a => a.Key == "FBICON").FirstOrDefault().Value;
+            model.TWITTERICON = dbObj.SystemConfigurations.Where(a => a.Key == "TWITTERICON").FirstOrDefault().Value;
+            model.LNICON = dbObj.SystemConfigurations.Where(a => a.Key == "LNICON").FirstOrDefault().Value;
+            if (Request.IsAuthenticated)
+            {
+                var email = User.Identity.Name;
+                var exist_user_id = dbObj.Users.Where(a => a.EmailID == email).FirstOrDefault().ID;
+                var user = dbObj.UserProfiles.Where(a => a.UserID == exist_user_id).FirstOrDefault();
+                if(user!=null && user.ProfilePicture !=null)
+                {
+                    model.DefaultMemberDisplayPicture = user.ProfilePicture;
+                }
+                else
+                {
+                    model.DefaultMemberDisplayPicture = dbObj.SystemConfigurations.Where(a => a.Key == "DefaultMemberDisplayPicture").FirstOrDefault().Value;
+
+                }
+            }
+           
+
+            return Json(model);
+        }
+
+
         [NonAction]
         public void SendEmail(String tomail, String subject, String body)
         {
