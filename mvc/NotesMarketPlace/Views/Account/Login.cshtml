@@ -48,39 +48,39 @@
                                     {
                                         @Html.AntiForgeryToken()
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        @Html.LabelFor(m => m.EmailID) <sup class="text-danger">&nbsp;*</sup>
-                                                        @Html.TextBoxFor(m => m.EmailID, new { @class = "form-control focus", placeholder = "Enter your Email Address" })
-                                                        @Html.ValidationMessageFor(m => m.EmailID)
-                                                    
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        @Html.LabelFor(m => m.Password) <sup class="text-danger">&nbsp;*</sup>
-                                                        <label for="exampleInputPassword1" class="forgot"><a href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a></label>
-                                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control focus", placeholder = "Enter password", @id = "password-field" })
-                                                        @Html.ValidationMessageFor(m => m.Password)
-                                 
-                                                        <span toggle="#password-field" class="field-icon toggle-password"><img src="@Url.Content("~/Content/images/pre-login/eye.png")" class="img-responsive" alt="eye"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                   
-                                                    <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" name="RememberMe" id="exampleCheck1">
-                                                        <label class="form-check-label ml-4 mb-0 mt-3" for="exampleCheck1">Remember Me</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <button type="submit" class="btn btn-general btn-lg btn-block">LOGIN</button>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.EmailID) <sup class="text-danger">&nbsp;*</sup>
+                                                    @Html.TextBoxFor(m => m.EmailID, new { @class = "form-control focus", placeholder = "Enter your Email Address" })
+                                                    @Html.ValidationMessageFor(m => m.EmailID)
+
                                                 </div>
                                             </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Password) <sup class="text-danger">&nbsp;*</sup>
+                                                    <label for="exampleInputPassword1" class="forgot"><a href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a></label>
+                                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control focus", placeholder = "Enter password", @id = "password-field" })
+                                                    @Html.ValidationMessageFor(m => m.Password)
+
+                                                    <span toggle="#password-field" class="field-icon toggle-password"><img src="@Url.Content("~/Content/images/pre-login/eye.png")" class="img-responsive" alt="eye"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group form-check">
+                                                    <input type="checkbox" class="form-check-input" name="RememberMe" id="exampleCheck1">
+                                                    <label class="form-check-label ml-4 mb-0 mt-3" for="exampleCheck1">Remember Me</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-general btn-lg btn-block">LOGIN</button>
+                                            </div>
+                                        </div>
                                     }
-                                        <p class="text-center links">Don't have an account?<a href="@Url.Action("SignUp","Account")"> Sign Up</a></p>
-                                    </div>
+                                    <p class="text-center links">Don't have an account?<a href="@Url.Action("SignUp","Account")"> Sign Up</a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,11 +93,9 @@
 
 
 
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/js")
 
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/js")
- 
-</body>
+    </body>
 </html>

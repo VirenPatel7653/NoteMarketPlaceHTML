@@ -1,6 +1,6 @@
-﻿@model IEnumerable<NotesMarketPlace.Models.BuyerRequestsModel>
+﻿@model IEnumerable<NotesMarketPlace.Models.MySoldNotesModel>
 @{
-    ViewBag.Title = "BuyerRequest";
+    ViewBag.Title = "MySoldNotes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,7 +30,7 @@
         <!-- Table Heading -->
         <div class="row mb-2" style="margin-top: 60px;">
             <div class="col-md-6">
-                <h1 class="dashboard-table-heading mt-2">Buyer Requests</h1>
+                <h1 class="dashboard-table-heading mt-2">My Sold Notes</h1>
             </div>
             <div class="col-md-6 ">
                 <div class="row no-gutters float-right">
@@ -53,7 +53,7 @@
         <!-- Table Heading End -->
         <!-- Table  -->
         <div class="table-responsive ">
-            <table id="buyerrequest" class="table custom-table cutom-column" data-pagination="true">
+            <table id="mysoldnotes" class="table custom-table cutom-column" data-pagination="true">
 
                 <thead>
                     <tr>
@@ -100,7 +100,7 @@
 
                                     <i class="fa fa-ellipsis-v " id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #d1d1d1"></i>
                                     <div class="dropdown-menu menu-dropdown" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" onclick="AllowDownloadConfirm(@b.ID)">Allow Download</a>
+                                        <a class="dropdown-item" href="@Url.Action("DownloadNote", "ManageNotes", new { id = @b.NoteID })">Download Note</a>
                                     </div>
                                 </div>
                             </td>
@@ -123,42 +123,10 @@
 </main>
 
 @section Scripts{
-
-    @if (@TempData["Success"] != null)
-    {
-
-        <script type="text/javascript">
-        $(function () {
-                 swal({
-                    text: "@TempData["Success"]",
-                     icon: "success",
-                     buttons: {
-                         confirm: { text: 'Ok', className: 'sweet-primary' },
-
-                     },
-                });
-        });
-        </script>
-
-    }
-    @if (@TempData["Error"] != null)
-    {
-
-        <script type="text/javascript">
-        $(function () {
-                 swal({
-                    text: "@TempData["Error"]",
-                    icon: "error",
-                });
-        });
-        </script>
-
-    }
-
     <script type="text/javascript">
         $(document).ready(function() {
 
-            var table = $('#buyerrequest').DataTable({
+            var table = $('#mysoldnotes').DataTable({
                 "pageLength":5,
                 "pagingType": "full_numbers",
                 language: {
@@ -184,27 +152,6 @@
             });
 
         });
-
-          function AllowDownloadConfirm(id) {
-            swal({
-                title: "Are you sure?",
-                text: " you want to allow this note for download",
-                icon: "error",
-                buttons: ["No","Yes"],
-            })
-                .then((willDelete) => {
-                    if (willDelete != null) {
-
-                         window.location.href = '@Url.Action("AllowDownload", "ManageNotes")/' + id;
-
-                    }
-
-                     })
-
-
-
-        }
-
 
     </script>
 }

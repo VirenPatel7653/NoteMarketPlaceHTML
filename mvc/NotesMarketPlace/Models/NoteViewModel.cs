@@ -30,5 +30,8 @@ namespace NotesMarketPlace.Models
         public int CountOfSpamReport { get; set; }
         public decimal Rating { get; set; }
         public int NoOfReviews { get; set; }
+        public List<CustomerReviewModel> Reviews { get; set; }
+
+
     }
 }

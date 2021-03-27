@@ -55,8 +55,10 @@ namespace NotesMarketPlace.Controllers
                         var existuser = dbObj.UserProfiles.Where(a => a.UserID == v.ID).FirstOrDefault();
                         if (existuser == null)
                         {
+                            TempData["Suceess"] = "You are Loggedin Successfully.";
                             return RedirectToAction("UserProfile", "User");
                         }
+                        TempData["Suceess"] = "You are Loggedin Successfully.";
                         return RedirectToAction("SearchNotes", "Notes");
                     }
                     else
@@ -87,6 +89,7 @@ namespace NotesMarketPlace.Controllers
                         Response.Cookies.Add(cookie);
                         Session["username"] = v.EmailID;
                         Session["userId"] = v.ID;
+                        TempData["Suceess"] = "You are Loggedin Successfully.";
                         return RedirectToAction("Dashboard", "Admin");
                     }
                     else
@@ -192,6 +195,30 @@ namespace NotesMarketPlace.Controllers
             ViewData["success"] = "Your password has been changed successfully and newly generated password is sent on your registered email address.";
             ModelState.Clear();
 
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            string email = User.Identity.Name;
+            var existUser = dbObj.Users.Where(a => a.EmailID == email).FirstOrDefault();
+            if(string.Compare(Crypto.EncryptBase64(model.OldPassword), existUser.Password) == 0)
+            {
+                existUser.Password = Crypto.EncryptBase64(model.NewPassword);
+                dbObj.SaveChanges();
+                return RedirectToAction("SellYourNotes","Notes");
+            }
+            ViewBag.Message = "Invalid credential provided";
             return View();
         }
 

@@ -202,12 +202,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddInAppropriateModel.cs" />
+    <Compile Include="Models\AddReviewModel.cs" />
     <Compile Include="Models\BuyerRequestsModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\CustomerReviewModel.cs" />
     <Compile Include="Models\DashboardNotesDetailsModel.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\AddNoteModel.cs" />
     <Compile Include="Models\ManageConfigurationModel.cs" />
+    <Compile Include="Models\MyDownloadsModel.cs" />
+    <Compile Include="Models\MyDownloadsViewModel.cs" />
+    <Compile Include="Models\MyRejectedNotesModel.cs" />
+    <Compile Include="Models\MySoldNotesModel.cs" />
     <Compile Include="Models\NoteViewModel.cs" />
     <Compile Include="Models\SearchNotesViewModel.cs" />
     <Compile Include="Models\SellYourNotesViewModel.cs" />
@@ -590,6 +598,7 @@
     <Content Include="Scripts\expressive.annotations.validate.js" />
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\header.js" />
+    <Content Include="Scripts\pagination.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -630,6 +639,10 @@
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Sweet\Alert.cshtml" />
     <Content Include="Views\ManageNotes\BuyerRequest.cshtml" />
+    <Content Include="Views\ManageNotes\MyDownloadsNotes.cshtml" />
+    <Content Include="Views\ManageNotes\MySoldNotes.cshtml" />
+    <Content Include="Views\ManageNotes\MyRejectedNotes.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

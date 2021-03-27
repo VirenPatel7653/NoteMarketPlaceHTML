@@ -62,19 +62,38 @@
 
                         @if (Request.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><img  src=""  alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-3 dp" style="margin-right: 10px;"></a>
-                            </li>
-                            using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                            {
-                                <li class="nav-item">
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">
-                                        <button type="submit" class="btn btn-general btn-sm mt-3">Logout</button>
+                           
 
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <a href="#" class="nav-link " id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <img src="" alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-3 dp" style="margin-right: 10px;">
                                     </a>
 
+                                    <div class="dropdown-menu custom-mobile-dropdown" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="@Url.Action("EditProfile","User")">My Profile</a>
+                                        <a class="dropdown-item" href="@Url.Action("MyDownloadsNotes","ManageNotes")">My Downloads</a>
+                                        <a class="dropdown-item" href="@Url.Action("MySoldNotes","ManageNotes")">My Sold Notes</a>
+                                        <a class="dropdown-item" href="@Url.Action("MyRejectedNotes","ManageNotes")">My Rejected Notes</a>
+                                        <a class="dropdown-item" href="@Url.Action("ChangePassword","Account")">Change Password</a>
+                                        <a class="dropdown-item drop-logout"  onclick="ConfirmLogout()">Logout</a>
+
+                                    </div>
+                                </div>
+
+                            </li>
+
+
+
+                         
+                                <li class="nav-item">
+                                   
+                                        <button onclick="ConfirmLogout()" class="btn btn-general btn-sm mt-3">Logout</button>
+
+                                 
+
                                 </li>
-                            }
+                           
                         }
                         else
                         {
@@ -113,21 +132,39 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><img src="" alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-0 dp" style="margin-right: 10px;"></a>
+                            <a class="nav-link" href="#">
+                            </a>
                         </li>
-                        using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                        {
-                            <li class="nav-item">
-                                <a href="javascript:document.getElementById('logoutForm').submit()">
-                                    <button type="submit" class="btn btn-general btn-sm mt-0">Logout</button>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a href="#" class="nav-link " id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
+                                    <img src="" alt="User Photo" class="rounded-circle avatar-sm img-responsive mt-0 dp" style="margin-right: 10px;">
                                 </a>
 
+                                <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="@Url.Action("EditProfile","User")">My Profile</a>
+                                    <a class="dropdown-item" href="@Url.Action("MyDownloadsNotes","ManageNotes")">My Downloads</a>
+                                    <a class="dropdown-item" href="@Url.Action("MySoldNotes","ManageNotes")">My Sold Notes</a>
+                                    <a class="dropdown-item" href="@Url.Action("MyRejectedNotes","ManageNotes")">My Rejected Notes</a>
+                                    <a class="dropdown-item" href="@Url.Action("ChangePassword","Account")">Change Password</a>
+                                   
+                                    <a class="dropdown-item drop-logout" onclick="ConfirmLogout()">Logout</a>
+
+                                </div>
+                            </div>
+
+                        </li>
+
+                        using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        { }
+                            <li class="nav-item">
+                                    <button onclick="ConfirmLogout()" class="btn btn-general btn-sm mt-0">Logout</button>
                             </li>
-                        }
-                    }
-                    else
-                    {
+                                       
+                      }
+                       else
+                                    {
 
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Login", "Account")"><button type="submit" class="btn btn-general px-3 mt-0">Login</button></a>
@@ -164,7 +201,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
 
-    <script>
+<script>
     $(function () {
 
         $.ajax({
@@ -181,9 +218,26 @@
                     $(".dp").attr("src","/"+d.DefaultMemberDisplayPicture);
                 }
 
+
             });
     });
-    </script>
+
+
+        function ConfirmLogout() {
+            swal({
+                title: "Are you sure you want to logout?",
+                icon: "info",
+                buttons: ["No","Yes"],
+
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        document.getElementById('logoutForm').submit();
+                    }
+                });
+        }
+
+</script>
 
 
 </body>

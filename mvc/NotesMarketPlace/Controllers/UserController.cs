@@ -103,13 +103,23 @@ namespace NotesMarketPlace.Controllers
 
                 return View(model);
             }
+
             ManageConfigurationModel m = new ManageConfigurationModel();
             m.DefaultMemberDisplayPicture = dbObj.SystemConfigurations.Where(a => a.Key == "DefaultMemberDisplayPicture").FirstOrDefault().Value;
+            
+            
             var existUser = dbObj.Users.Where(a => a.ID == model.UserID).FirstOrDefault();
             existUser.FirstName = model.FirstName;
             existUser.LastName = model.LastName;
 
+            
             UserProfile user = new UserProfile();
+            if(model.ID !=0)
+            {
+                user = dbObj.UserProfiles.Where(a => a.ID == model.ID).FirstOrDefault();
+                user.ModifiedBy = existUser.ID;
+                user.ModifiedDate = DateTime.Now;
+            }
             user.UserID = model.UserID;
             user.DOB = (model.DOB != null) ? model.DOB : null;
             user.Gender = (model.Gender != -1) ? (model.Gender) : 3;
@@ -124,7 +134,7 @@ namespace NotesMarketPlace.Controllers
                     model.ProfilePicture.SaveAs(_path);
                     user.ProfilePicture = "UploadedFiles/User_Profile/" + _FileName;
                 }
-                else
+                else if(model.ProfilePictureName ==null)
                 {
                     user.ProfilePicture = m.DefaultMemberDisplayPicture;
                 }
@@ -132,6 +142,8 @@ namespace NotesMarketPlace.Controllers
             catch
             {
                 ViewBag.Message = "File upload failed!!";
+                TempData["Error"] = "File upload failed!!";
+
                 return View("UserProfile");
             }
             user.AddressLine1 = model.AddressLine1;
@@ -144,13 +156,85 @@ namespace NotesMarketPlace.Controllers
             user.College = (model.College != null) ? model.College : null;
             user.CreatedDate = DateTime.Now;
             user.CreatedBy = model.UserID;
-            dbObj.UserProfiles.Add(user);
+            if(model.ID ==0)
+            {
+                dbObj.UserProfiles.Add(user);
+                TempData["Suceess"] = "Your profile details added successfully.";
+
+            }
+            else
+            {
+                TempData["Suceess"] = "Your profile details updated successfully.";
+
+            }
             dbObj.SaveChanges();
 
             ModelState.Clear();
-           
+
             return RedirectToAction("SearchNotes","Notes");
         }
-    
+
+        [HttpGet]
+        
+        public ActionResult EditProfile()
+        {
+            string email = User.Identity.Name;
+            var u = dbObj.Users.Where(a => a.EmailID == email).FirstOrDefault();
+            var existUser = dbObj.UserProfiles.Where(a => a.UserID == u.ID).FirstOrDefault();
+            UserProfileModel user = new UserProfileModel();
+            user.ID = existUser.ID;
+            user.UserID = u.ID;
+            user.FirstName = u.FirstName;
+            user.LastName = u.LastName;
+            user.EmailID = u.EmailID;
+            user.Gender = existUser.Gender != -1 ? Convert.ToInt32(existUser.Gender) : -1;
+            user.DOB = (existUser.DOB != null) ? existUser.DOB : null;
+            user.Phonenumber_CountryCode = (existUser.Phonenumber_CountryCode != null) ? existUser.Phonenumber_CountryCode : null;
+            user.Phonenumber = (existUser.Phonenumber != null) ? existUser.Phonenumber : null;
+            user.ProfilePictureName = existUser.ProfilePicture.Split('/').Last();
+            user.AddressLine1 = existUser.AddressLine1;
+            user.AddressLine2 = (existUser.AddressLine2 != null) ? existUser.AddressLine2 : null;
+            user.City = existUser.City;
+            user.State = existUser.State;
+            user.ZipCode = existUser.ZipCode;
+            user.Country = existUser.Country;
+            user.University = (existUser.University != null) ? existUser.University : null;
+            user.College = (existUser.College != null) ? existUser.College : null;
+            List<SelectListItem> GenderList = dbObj.ReferenceDatas.Where(a => a.RefCategory == "Gender" && a.IsActive == true)
+                 .Select(x =>
+                 new SelectListItem()
+                 {
+                     Text = x.Value,
+                     Value = x.ID.ToString()
+                 }).ToList();
+            var gendertip = new SelectListItem()
+            {
+                Value = "-1",
+                Text = "Select your gender",
+                Selected = true
+            };
+            GenderList.Insert(0, gendertip);
+            List<SelectListItem> CountryList = dbObj.Countries.Where(a => a.IsActive == true)
+               .Select(x =>
+               new SelectListItem()
+               {
+                   Text = x.CountryCode,
+                   Value = x.CountryCode
+               }).ToList();
+            var countrytip = new SelectListItem()
+            {
+                Value = null,
+                Text = "Select your country",
+                Selected = true
+            };
+            CountryList.Insert(0, countrytip);
+
+            user.GenderList = GenderList;
+            user.CountryList = CountryList;
+
+            return View("UserProfile", user);
+        }
+
+
     }
 }

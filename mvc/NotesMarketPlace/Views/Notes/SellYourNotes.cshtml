@@ -4,21 +4,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 @Styles.Render() {
 <style type="text/css">
     table.first-table tr td:nth-child(5) {
-     
         text-align: center;
     }
 
     table:not(first) tr td:nth-child(6) {
         text-align: center;
     }
-    table thead tr th{
-        border:hidden !important;
+
+    table thead tr th {
+        border: hidden !important;
     }
-    
-    
+
+  
+
+    .card-body a:hover {
+        text-decoration: none;
+    }
 </style>
 }
 
@@ -50,13 +55,37 @@
                 <div class="card dashboard-card mx-auto" style="">
                     <div class="card-body">
                         <div class="row">
+
                             <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                                <h1 class="dashboard-card-heading ">100</h1>
-                                <p class="dashboard-card-text">Number Of Notes Sold</p>
+                                @if (Model.NoOfSoldNotes != 0)
+                                {
+                                    <a href='@Url.Action("MySoldNotes","ManageNotes")'>
+                                        <h1 class="dashboard-card-heading ">@Model.NoOfSoldNotes</h1>
+                                        <p class="dashboard-card-text">Number Of Notes Sold</p>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <h1 class="dashboard-card-heading ">@Model.NoOfSoldNotes</h1>
+                                    <p class="dashboard-card-text">Number Of Notes Sold</p>
+                                }
+
                             </div>
+
                             <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                                <h1 class="dashboard-card-heading ">$10,00,000</h1>
-                                <p class="dashboard-card-text">Money Earned</p>
+                                @if (Model.MoneyEarned != 0)
+                                {
+                                    <a href='@Url.Action("MySoldNotes","ManageNotes")'>
+                                        <h1 class="dashboard-card-heading ">$@Model.MoneyEarned</h1>
+                                        <p class="dashboard-card-text">Money Earned</p>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <h1 class="dashboard-card-heading ">$@Model.MoneyEarned</h1>
+                                    <p class="dashboard-card-text">Money Earned</p>
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -65,24 +94,57 @@
             <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
                 <div class="card dashboard-card mx-auto" style="">
                     <div class="card-body">
-                        <h1 class="dashboard-card-heading text-center">38</h1>
-                        <p class="text-center dashboard-card-text">My Downloads</p>
+                        @if (Model.NoOfMyDownloads != 0)
+                        {
+                            <a href='@Url.Action("MyDownloadsNotes","ManageNotes")'>
+                                <h1 class="dashboard-card-heading text-center">@Model.NoOfMyDownloads</h1>
+                                <p class="text-center dashboard-card-text">My Downloads</p>
+                            </a>
+                        }
+                        else
+                        {
+                            <h1 class="dashboard-card-heading text-center">@Model.NoOfMyDownloads</h1>
+                            <p class="text-center dashboard-card-text">My Downloads</p>
+                        }
+
                     </div>
                 </div>
             </div>
             <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
                 <div class="card dashboard-card mx-auto" style="">
                     <div class="card-body">
-                        <h1 class="dashboard-card-heading text-center">12</h1>
-                        <p class="text-center dashboard-card-text">My Rejected Notes</p>
+                        @if (Model.NoOfMyRejectedNotes != 0)
+                        {
+                            <a href='@Url.Action("MyRejectedNotes","ManageNotes")'>
+                                <h1 class="dashboard-card-heading text-center">@Model.NoOfMyRejectedNotes</h1>
+                                <p class="text-center dashboard-card-text">My Rejected Notes</p>
+                            </a>
+                        }
+                        else
+                        {
+                            <h1 class="dashboard-card-heading text-center">@Model.NoOfMyRejectedNotes</h1>
+                            <p class="text-center dashboard-card-text">My Rejected Notes</p>
+                        }
+
                     </div>
                 </div>
             </div>
             <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
                 <div class="card dashboard-card mx-auto" style="padding: 0px;">
                     <div class="card-body">
-                        <h1 class="dashboard-card-heading text-center">102</h1>
-                        <p class="text-center dashboard-card-text">Buyer Requests</p>
+                        @if (Model.NoOfBuyerRequests != 0)
+                        {
+                            <a href='@Url.Action("BuyerRequest","ManageNotes")'>
+                                <h1 class="dashboard-card-heading text-center">@Model.NoOfBuyerRequests</h1>
+                                <p class="text-center dashboard-card-text">Buyer Requests</p>
+                            </a>
+                        }
+                        else
+                        {
+                            <h1 class="dashboard-card-heading text-center">@Model.NoOfBuyerRequests</h1>
+                            <p class="text-center dashboard-card-text">Buyer Requests</p>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -106,7 +168,7 @@
                         <button type="button" id="inprogresssearchbtn" class="btn btn-general btn-sm mt-0 ml-3  text-uppercase">Search</button>
                     </form>
                 </div>
-               
+
             </div>
             <!-- Table Heading End-->
             <!-- Table-->
@@ -132,94 +194,132 @@
                                 <td>@a.Category</td>
                                 <td>@a.Status</td>
                                 <td>
-                                    @if(@a.Status == "Draft")
+                                    @if (@a.Status == "Draft")
                                     {
-                                        <img src="@Url.Content("~/Content/images/Dashboard/edit.png")" width="20px" height="20px" alt="edit">
-                                        <img src="@Url.Content("~/Content/images/Dashboard/delete.png")" width="18px" class="ml-2" height="20px" alt="delete">
+                                        <a href='@Url.Action("EditNotes", "Notes", new { id = @a.NoteID })'>
+                                            <img src="@Url.Content("~/Content/images/Dashboard/edit.png")" width="20px" height="20px" alt="edit">
+                                        </a>
+                                        <a onclick="deleteNotes(@a.NoteID)">
+
+                                            <img src="@Url.Content("~/Content/images/Dashboard/delete.png")" width="18px" class="ml-2" height="20px" alt="delete">
+                                        </a>
                                     }
                                     else
                                     {
                                         <a href='@Url.Action("NoteDetails", "Notes", new { id = @a.NoteID })'>
                                             <img src="@Url.Content("~/Content/images/Dashboard/eye.png")" width="30px" height="15px" alt="edit">
-                                         </a>
+                                        </a>
                                     }
                                 </td>
                             </tr>
                         }
 
-                </tbody>
+                    </tbody>
                 </table>
             </div>
+        </div>
+        <!-- Table End-->
+        <!-- Table Heading-->
+        <div class="row mb-2" style="margin-top: 60px;">
+            <div class="col-md-6">
+                <h1 class="dashboard-table-heading mt-2">Published Notes</h1>
             </div>
-            <!-- Table End-->
-          
-            <!-- Table Heading-->
-            <div class="row mb-2" style="margin-top: 60px;">
-                <div class="col-md-6">
-                    <h1 class="dashboard-table-heading mt-2">Published Notes</h1>
+            <div class="col-md-6 ">
+                <div class="row no-gutters float-right">
+                    <form class="form-inline my-2 my-lg-0">
+                        <div class="form-group has-search mb-0">
+
+                            <span class="fa fa-search form-control-feedback"></span>
+
+                            <input type="search" class="form-control" id="publishsearchinput" placeholder="Search">
+                        </div>
+
+                        <button type="button" id="publishsearchbtn" class="btn btn-general btn-sm mt-0 ml-3  text-uppercase">Search</button>
+                    </form>
                 </div>
-                <div class="col-md-6 ">
-                    <div class="row no-gutters float-right">
-                        <form class="form-inline my-2 my-lg-0">
-                            <div class="form-group has-search mb-0">
 
-                                <span class="fa fa-search form-control-feedback"></span>
-
-                                <input type="search" class="form-control" id="publishsearchinput" placeholder="Search">
-                            </div>
-
-                            <button type="button" id="publishsearchbtn" class="btn btn-general btn-sm mt-0 ml-3  text-uppercase">Search</button>
-                        </form>
-                    </div>
-
-                </div>
-               
             </div>
-            <!-- Table Heading End-->
-            <!-- Table-->
-            <div class="table-responsive">
-                <table class="table custom-table" id="publish">
-                    <thead>
-                        <tr>
-                            <th>ADDED DATE</th>
-                            <th>TITLE</th>
-                            <th>CATEGORY</th>
-                            <th>SELL TYPE</th>
-                            <th>PRICE</th>
-                            <th class="text-center">ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var a in Model.ListOfPublished)
-                        {
-                            <tr>
-
-                                <td>@a.AddedDate</td>
-                                <td>@a.Title</td>
-                                <td>@a.Category</td>
-                                <td>@a.SellType</td>
-                                <td>$ @a.SellingPrice</td>
-                                <td>
-                                    <a href='@Url.Action("NoteDetails", "Notes", new { id = @a.NoteID })'>
-                                        <img src="@Url.Content("~/Content/images/Dashboard/eye.png")" width="30px" height="15px" alt="edit">
-                                     </a>
-                                </td>
-                            </tr>
-                        }
-                           
-                        </tbody>
-                </table>
-            </div>
-            <!-- Table End-->
-           
-
 
         </div>
+        <!-- Table Heading End-->
+        <!-- Table-->
+        <div class="table-responsive">
+            <table class="table custom-table" id="publish">
+                <thead>
+                    <tr>
+                        <th>ADDED DATE</th>
+                        <th>TITLE</th>
+                        <th>CATEGORY</th>
+                        <th>SELL TYPE</th>
+                        <th>PRICE</th>
+                        <th class="text-center">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model.ListOfPublished)
+                    {
+                        <tr>
+
+                            <td>@a.AddedDate</td>
+                            <td>@a.Title</td>
+                            <td>@a.Category</td>
+                            <td>@a.SellType</td>
+                            <td>$ @a.SellingPrice</td>
+                            <td>
+                                <a href='@Url.Action("NoteDetails", "Notes", new { id = @a.NoteID })'>
+                                    <img src="@Url.Content("~/Content/images/Dashboard/eye.png")" width="30px" height="15px" alt="edit">
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- Table End-->
+
+
+
+    </div>
 </main>
 
 
 @section Scripts{
+    @if (@TempData["Success"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Success"]",
+                     icon: "success",
+                     buttons: {
+                         confirm: { text: 'Ok', className: 'sweet-primary' },
+                         
+                     },
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
+
+
     <script type="text/javascript">
+
         $(document).ready(function() {
 
             var table1 = $('#inprogress').DataTable({
@@ -277,6 +377,27 @@
 
 
         });
+
+         function deleteNotes(id) {
+            swal({
+                title: "Are you sure?",
+                text: " you want to delete this note",
+                icon: "error",
+                buttons: ["No",true],
+            })
+                .then((willDelete) => {
+                    if (willDelete != null) {
+                       
+                         window.location.href = '@Url.Action("DeleteNotes", "Notes")/' + id;
+
+                    }
+
+                     })
+
+
+
+        }
+
 
     </script>
 }

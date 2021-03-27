@@ -24,7 +24,10 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="heading field-heading ">Basic Profile Details</h1>
+                    <h1 class="heading field-heading ">
+                        Basic Profile Details
+
+                    </h1>
                 </div>
             </div>
             <div class="row">
@@ -60,9 +63,9 @@
                     <div class="form-group">
                         <label for="dob">Date Of Birth</label>
                         <div class="input-group date">
-                            <!-- Accepts the input from calendar -->
-                            <input class="form-control dobdate" style="border-right:none;" type="text" name="dob" placeholder="Enter your date of birth" id="dob">
-                            <!-- Sets the calendar icon -->
+                            @*  Accepts the input from calendar *@
+                            @Html.TextBoxFor(m => m.DOB, new { @class = "form-control dobdate", @style = "border-right:none;", @placeholder = "Enter your date of birth", @id = "dob" })
+                            @*   Sets the calendar icon *@
                             <span class="input-group-prepend ">
                                 <span class="input-group-text bg-white" style="border-left:none;">
                                     <img src="@Url.Content("~/Content/images/User-Profile/calendar.png")" onclick="setDatepicker(this)" alt="">
@@ -78,7 +81,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="gender">Gender</label>
-                        @Html.DropDownListFor(m => m.Gender , new SelectList(Model.GenderList, "Value", "Text"),htmlAttributes: new { @class = "form-control select-text" })
+                        @Html.DropDownListFor(m => m.Gender, new SelectList(Model.GenderList, "Value", "Text"), htmlAttributes: new { @class = "form-control select-text" })
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -86,7 +89,7 @@
                         <label for="phone">Phone Number</label>
                         <div class="row">
                             <div class="col-md-3 mb-2 mb-lg-0 ">
-                                @Html.DropDownListFor(m => m.Phonenumber_CountryCode, new SelectList(Model.CountryList,"Value","Text"), htmlAttributes: new { @class = "form-control select-text" })
+                                @Html.DropDownListFor(m => m.Phonenumber_CountryCode, new SelectList(Model.CountryList, "Value", "Text"), htmlAttributes: new { @class = "form-control select-text" })
                                 @Html.ValidationMessageFor(m => m.Phonenumber_CountryCode)
                             </div>
                             <div class="col-md-9">
@@ -106,7 +109,18 @@
 
                             <div class="image-upload custom-file-box py-4">
                                 <img src=@Url.Content("~/Content/images/User-Profile/upload.png") width="40px" height="60px" alt="uploadpicture" />
-                                <figcaption id="uploadpicture" class="select-text">Upload a Picture</figcaption>
+                                <figcaption id="uploadpicture" class="select-text">
+                                    @if (Model.ProfilePictureName == null)
+                                    {
+                                        <h6>Upload a Picture</h6>
+                                    }
+                                    else
+                                    {
+                                        <h6>@Model.ProfilePictureName</h6>
+
+                                    }
+
+                                </figcaption>
                                 <input id="file-input" type="file" accept="image/*" name="ProfilePicture" onchange="showname(this)" />
                             </div>
                         </label>
@@ -192,7 +206,9 @@
             <div class="row">
                 <div class="col-md-4">
                     @Html.HiddenFor(m => m.UserID)
-                 
+                    @Html.HiddenFor(m => m.ID)
+                    @Html.HiddenFor(m => m.ProfilePictureName)
+
                     <button type="submit" class="btn btn-general mt-2 mb-5 px-5 py-1">SUBMIT</button>
                 </div>
             </div>
@@ -233,4 +249,32 @@
         }
 
     </script>
+
+    @if (@TempData["Suceess"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Suceess"]",
+                    icon: "success",
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
 }

@@ -8,7 +8,14 @@
     <!-- Top Section-->
     <div class="jumbotron jumbotron-fluid user-profile-banner d-flex justify-content-center align-items-center" style="height: 250px;">
         <div class="container text-center">
-            <h1>Add Notes</h1>
+            @if (Model.ID == 0)
+            {
+                <h1>Add Notes</h1>
+            }
+            else
+            {
+                <h1>Edit Notes</h1>
+            }
         </div>
     </div>
     <!-- Top Section End-->
@@ -55,7 +62,17 @@
                         <label for="file-input-display" style="display: block;">
                             <div class="image-upload custom-file-box py-4">
                                 <img src="@Url.Content("~/Content/images/Add-notes/upload-file.png")" width="40px" height="60px" alt="uploadpicture" />
-                                <figcaption id="displaypicture" class="select-text">Upload a Picture</figcaption>
+                                <figcaption id="displaypicture" class="select-text">
+                                    @if (Model.DisplayPictureName == null)
+                                    {
+                                        <h6> Upload a Picture</h6>
+                                    }
+                                    else
+                                    {
+                                        <h6>@Model.DisplayPictureName</h6>
+                                    }
+
+                                </figcaption>
                                 <input id="file-input-display" type="file" accept="image/*" name="DisplayPicture" onchange="showname(this,'displaypicture')" />
                             </div>
                         </label>
@@ -63,23 +80,33 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                     
+
 
                         @Html.LabelFor(m => m.UploadNotes)<sup class="text-danger">*</sup>
 
                         <label for="file-input" style="display: block;">
                             <div class="image-upload custom-file-box py-4">
                                 <img src="@Url.Content("~/Content/images/Add-notes/upload-note.png")" width="40px" height="60px" alt="uploadpicture" />
-                                <figcaption id="uploadpicture" class="select-text">Upload your notes</figcaption>
-                                @Html.TextBoxFor(m => m.UploadNotes, new
-                           {
-                               @id = "file-input",
-                               @type = "file",
-                               @onchange = "showname(this,'uploadpicture')",
-                               @required = "required"
-                           })
+                                <figcaption id="uploadpicture" class="select-text">
 
-                                @*<input id="file-input" type="file" name="UploadNotes" onchange="showname(this,'uploadpicture')" />*@
+                                    @if (Model.UploadNotesName == null)
+                                    {
+                                        <h6>   Upload your notes</h6>
+                                    }
+                                    else
+                                    {
+                                        <h6>@Model.UploadNotesName</h6>
+                                    }
+                                </figcaption>
+                                @Html.TextBoxFor(m => m.UploadNotes, new
+                          {
+                              @id = "file-input",
+                              @type = "file",
+                              @onchange = "showname(this,'uploadpicture')",
+                              @required = "required"
+                          })
+                                @*
+                                    <input id="file-input" type="file" class="removerequired" name="UploadNotes" onchange="showname(this,'uploadpicture')">*@
                             </div>
                         </label>
                         @Html.ValidationMessageFor(m => m.UploadNotes)
@@ -178,11 +205,22 @@
                         <br>
                         @foreach (var mode in Model.SellingModeList)
                         {
+
                             <div class="form-check form-check-inline">
-                                @Html.RadioButtonFor(m => m.IsPaid, mode.Value, new { @class = "custom-radio" })
+                                @if (mode.Selected)
+                                {
+                                    @Html.RadioButtonFor(m => m.IsPaid, mode.Value, new { @class = "custom-radio", @checked = true })
+
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(m => m.IsPaid, mode.Value, new { @class = "custom-radio" })
+
+                                }
                                 @Html.Label(mode.Text, new { @class = "form-check-label mr-4" })
 
                             </div>
+
                         }
                     </div>
                     <div class="form-group ">
@@ -198,7 +236,20 @@
                             <label for="file-input-preview" style="display: block;">
                                 <div class="image-upload custom-file-box py-4">
                                     <img src="@Url.Content("~/Content/images/Add-notes/upload-file.png")" width="40px" height="50px" alt="uploadpicture" />
-                                    <figcaption id="previewpicture" class="select-text">Upload a file</figcaption>
+                                    <figcaption id="previewpicture" class="select-text">
+
+
+                                        @if (Model.NotesPreviewName == null)
+                                        {
+                                            <h6>Upload a file</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>@Model.NotesPreviewName</h6>
+                                        }
+
+
+                                    </figcaption>
                                     <input id="file-input-preview" type="file" name="NotesPreview" onchange="showname(this,'previewpicture')" />
                                 </div>
                             </label>
@@ -208,10 +259,19 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
+                    @Html.HiddenFor(m => m.ID, new { @id = "mid" })
+                    @if (Model.ID == 0)
+                    {
+                        <button type="submit" class="btn  btn-general   mt-2 px-3 py-1 mr-4" style="width: 150px;" name="submit" value="Save">SAVE</button>
 
-
-                    <button type="submit" class="btn  btn-general   mt-2 px-3 py-1 mr-4" style="width: 150px;" name="submit" value="Save">SAVE</button>
+                    }
                     <button type="submit" class="btn btn-general mt-2 px-3 py-1" style="width: 150px;" name="submit" value="Publish">PUBLISH</button>
+                    @if (Model.ID != 0)
+                    {
+                        <a href="@Url.Action("SellYourNotes","Notes")">
+                            <button type="button" class="btn btn-general mt-2 px-3 py-1" style="width: 150px;">Cancel</button>
+                        </a>
+                    }
                 </div>
             </div>
         }
@@ -221,8 +281,46 @@
 
 @section Scripts
 {
+
+    @if (@TempData["Suceess"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Suceess"]",
+                    icon: "success",
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
     <!--Upload Picture JS-->
     <script type="text/javascript">
+        $(function () {
+           @* var modelval = '@Model.IsEnabled';
+*@
+            var mid = $('#mid').val();
+            if (mid != 0)
+            {
+                document.getElementsByClassName(".removerequired").removeAttribute("required");
+            }
+        });
+
         function showname(e, idname) {
             var name = e.files;
 
@@ -231,6 +329,7 @@
             }
         }
     </script>
+
 }
 
 @Scripts.Render("~/bundles/jqueryval")

@@ -1,0 +1,357 @@
+﻿@model NotesMarketPlace.Models.MyDownloadsViewModel
+@{
+    ViewBag.Title = "MyDownloadsNotes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Styles.Render() {
+<style>
+    table tr td:first-child {
+        text-align: center;
+    }
+
+    table thead tr th {
+        border: hidden !important;
+    }
+
+    table tbody tr a,
+    table tbody tr a:hover,
+    table tbody tr a:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+
+   @* .swal-button--confirm,
+    .swal-button--confirm:hover,
+    .swal-button--confirm:focus {
+        background: #e01d1d !important;
+    }*@
+</style>
+
+}
+
+
+<main role="main" class="pt-5">
+    <div class="container">
+        <!-- Table Heading -->
+        <div class="row mb-2" style="margin-top: 60px;">
+            <div class="col-md-6">
+                <h1 class="dashboard-table-heading mt-2">My Downloads</h1>
+            </div>
+            <div class="col-md-6 ">
+                <div class="row no-gutters float-right">
+                    <form class="form-inline my-2 my-lg-0">
+                        <div class="form-group has-search mb-0">
+
+                            <span class="fa fa-search form-control-feedback"></span>
+
+                            <input type="search" class="form-control" id="searchinput" placeholder="Search">
+                        </div>
+
+                        <button type="button" id="searchbtn" class="btn btn-general btn-sm mt-0 ml-3  text-uppercase">Search</button>
+                    </form>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- Table Heading End -->
+        <!-- Table  -->
+        <div class="table-responsive ">
+            <table id="buyerrequest" class="table custom-table cutom-column" data-pagination="true">
+
+                <thead>
+                    <tr>
+                        <th class="text-center">SR NO.</th>
+                        <th>NOTE TITLE</th>
+                        <th>CATEGORY</th>
+                        <th>BUYER</th>
+                        <th>SELL TYPE</th>
+                        <th>PRICE</th>
+                        <th>DOWNLOADED DATE/TIME</th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var d in Model.ListOfDownoads.ToList())
+                    {
+                        <tr>
+
+                            <td>@i</td>
+                            <td>
+                                <a href='@Url.Action("NoteDetails", "Notes", new { id = @d.NoteID })'>
+                                    @d.Title
+                                </a>
+                            </td>
+                            <td>@d.Category</td>
+                            <td>@d.Seller</td>
+                            <td>@d.SellType</td>
+                            <td>$ @d.SellingPrice</td>
+                            <td>@d.DownloadedDate</td>
+
+                            <td>
+                                <a href='@Url.Action("NoteDetails", "Notes", new { id = @d.NoteID })'>
+                                    <img src="@Url.Content("~/Content/images/Dashboard/eye.png")" class="mr-2" width="30px" height="15px" alt="edit">
+                                </a>
+                            </td>
+                            <td>
+                                <div class="dropdown dropleft">
+
+                                    <i class="fa fa-ellipsis-v " id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #d1d1d1"></i>
+                                    <div class="dropdown-menu menu-dropdown" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="@Url.Action("DownloadNote", "ManageNotes", new { id = @d.NoteID })">Download Note</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" onclick="addReviewbtn(@d.ID)" href="#">Add Reviews/Feedback</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#inappropriate" onclick="inappropriatebtn(@d.ID,'@d.Title')" href="#">Report as Inappropriate</a>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                        i++;
+
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+        <!-- Table End -->
+
+    </div>
+
+
+    <!-- Add Review Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog popup-margin">
+            <div class="modal-content">
+                <div class="modal-header pb-0 ml-4" style="border-bottom: none;margin-top: 20px;">
+                    <h5 class="modal-title mt-0 about-sub-heading p-0" id="exampleModalLabel">Add Review</h5>
+                    <button type="button" class="close cl" style="margin-top: -40px;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mt-0 pt-0">
+
+
+                    @using (Html.BeginForm("AddReview", "ManageNotes", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row px-4">
+                            <div class="col-md-12 ">
+                                <div class="rate">
+                                    @Html.RadioButtonFor(m => m.RatingModel.Rating, 5, new { @id = "star5" })
+                                    @* <input type="radio" id="star5" name="Rating" value="5" />*@
+                                    <label for="star5" title="text">5 stars</label>
+                                    @Html.RadioButtonFor(m => m.RatingModel.Rating, 4, new { @id = "star4" })
+
+                                    @*  <input type="radio" id="star4" name="Rating" value="4" />*@
+                                    <label for="star4" title="text">4 stars</label>
+                                    @Html.RadioButtonFor(m => m.RatingModel.Rating, 3, new { @id = "star3" })
+
+                                    @*<input type="radio" id="star3" name="Rating" value="3" />*@
+                                    <label for="star3" title="text">3 stars</label>
+                                    @Html.RadioButtonFor(m => m.RatingModel.Rating, 2, new { @id = "star2" })
+
+                                    @*  <input type="radio" id="star2" name="Rating" value="2" />*@
+                                    <label for="star2" title="text">2 stars</label>
+                                    @Html.RadioButtonFor(m => m.RatingModel.Rating, 1, new { @id = "star1" })
+
+                                    @*     <input type="radio" id="star1" name="Rating" value="1" />*@
+                                    <label for="star1" title="text">1 star</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Comments <sup>*</sup></label>
+                                    @Html.TextAreaFor(m => m.RatingModel.Comments, new { @placeholder = "Comments...", @class = "form-control", @id = "exampleFormControlTextarea1", @style = "height:100px;" })
+                                    @Html.ValidationMessageFor(m => m.RatingModel.Comments)
+                                    @* <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Comments..." rows="3" style="height:100px;"></textarea>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-md-6">
+                                @Html.HiddenFor(m => m.RatingModel.AgainstDownloadsID, new { @id = "downloadId" })
+                                @* <input type="hidden" id="downloadId" name="download">*@
+                                <button type="submit" class="btn btn-general px-5 ml-4" style="margin-top: 30px; margin-bottom: 30px;">SUBMIT</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Add Review Modal End -->
+    <!-- In Appropriate Modal -->
+    <div class="modal fade" id="inappropriate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog popup-margin">
+            <div class="modal-content">
+                <div class="modal-header pb-0 ml-4" style="border-bottom: none;margin-top: 20px;">
+                    <h4 class="modal-title mt-0 about-sub-heading p-0" id="exampleModalLabel">In Appropriate Note</h4>
+                    <button type="button" class="close cl" style="margin-top: -40px;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body mt-0 pt-0">
+
+
+                    @using (Html.BeginForm("AddInAppropriate", "ManageNotes", FormMethod.Post, new { @id = "inappropriateform" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row px-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p class="about-sub-heading" style="font-size:20px;" id="inappropriatenotetitle"></p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Remarks <sup>*</sup></label>
+                                    @Html.TextAreaFor(m => m.InAppropriateModel.Remarks, new { @placeholder = "Remarks...", @class = "form-control", @id = "exampleFormControlTextarea1", @style = "height:100px;" })
+                                    @Html.ValidationMessageFor(m => m.InAppropriateModel.Remarks)
+                                    @* <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Comments..." rows="3" style="height:100px;"></textarea>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-md-12">
+                                @Html.HiddenFor(m => m.InAppropriateModel.AgainstDownloadsID, new { @id = "inappropriatenote" })
+                                @* <input type="hidden" id="downloadId" name="download">*@
+
+                                <button type="button" class="btn btn-general px-2 ml-4" style="margin-top: 30px; margin-bottom: 30px;" onclick="confirminappropriate()">Report an Issue</button>
+                                <button type="button" class="btn btn-general px-3 ml-4" data-dismiss="modal" aria-label="Close" style="margin-top: 30px; margin-bottom: 30px;">Cancel</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <!-- In Appropriate Modal End -->
+
+</main>
+
+@section Scripts{
+    @if (@TempData["Success"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Success"]",
+                     icon: "success",
+                     buttons: {
+                         confirm: { text: 'Ok', className: 'sweet-primary' },
+
+                     },
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
+
+
+    <script type="text/javascript">
+
+
+        $(function () {
+
+
+
+
+            $('.stars').stars();
+        });
+        $(document).ready(function () {
+
+            var table = $('#buyerrequest').DataTable({
+                "pageLength": 5,
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-right fa-2x"></i>',
+                        previous: ' <i class="fa fa-angle-left fa-2x"></i>',
+                        first: false,
+                        last: false
+                    }
+                },
+                bFilter: false,
+                ordering: false,
+                searching: true,
+                "dom": '<"top">rt<"bottom"p>'
+
+            });
+            $('.dataTables_length').addClass('bs-select');
+
+
+            $("#searchbtn").click(function () {
+                var x = $("#searchinput").val();
+                table.search(x).draw();
+            });
+
+
+
+        });
+        function addReviewbtn(id) {
+
+            $("#downloadId").val(id);
+        }
+        function inappropriatebtn(id, title) {
+
+            $("#inappropriatenotetitle").html(title);
+            $("#inappropriatenote").val(id);
+        }
+
+        function confirminappropriate() {
+            swal({
+                title: "Are you sure?",
+                text: " you want to mark this report as spam, you cannot update it later",
+                icon: "warning",
+                buttons: {
+                    confirm: { text: 'Yes', className: 'sweet-warning' },
+                    cancel: 'No'
+                },
+
+
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $("#inappropriateform").submit();
+                    }
+                    else {
+                        $("#inappropriate").modal('toggle');
+                    }
+                });
+        }
+    </script>
+}

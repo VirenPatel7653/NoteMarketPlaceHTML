@@ -10,6 +10,7 @@ namespace NotesMarketPlace.Models
 {
     public class UserProfileModel
     {
+        public int ID { get; set; }
         public int UserID { get; set; }
 
         [Required]
@@ -57,6 +58,7 @@ namespace NotesMarketPlace.Models
         public string University { get; set; }
 
         public string College { get; set; }
+        public string ProfilePictureName { get; set; }
 
     }
 }

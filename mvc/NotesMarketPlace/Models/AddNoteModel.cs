@@ -10,6 +10,7 @@ namespace NotesMarketPlace.Models
 {
     public class AddNoteModel
     {
+        public int ID { get; set; }
         public int SellerID { get; set; }
         public int Status { get; set; }
 
@@ -24,9 +25,9 @@ namespace NotesMarketPlace.Models
         [Display(Name = "Display Picture")]
         public HttpPostedFileBase DisplayPicture { get; set; }
 
-        [Required(ErrorMessage ="Upload Notes is Required")]
+        [Required(ErrorMessage = "Upload Notes is Required")]
         [Display(Name = "Upload Notes")]
-        
+
         public HttpPostedFileBase UploadNotes { get; set; }
 
         public IEnumerable<SelectListItem> TypeList { get; set; }
@@ -59,12 +60,16 @@ namespace NotesMarketPlace.Models
         [Required(ErrorMessage = "Sell For is required.")]
         [Display(Name = "Sell For")]
         public string IsPaid { get; set; }
-        [RequiredIf("IsPaid == 'P'",ErrorMessage ="Selling Price is required.")]
+        [RequiredIf("IsPaid == 'P'", ErrorMessage = "Selling Price is required.")]
         [Display(Name = "Sell Price")]
         public Nullable<decimal> SellingPrice { get; set; }
 
         [Display(Name = "Note Preview")]
         public HttpPostedFileBase NotesPreview { get; set; }
+
+        public string UploadNotesName { get; set; }
+        public string DisplayPictureName { get; set; }
+        public string NotesPreviewName { get; set; }
 
     }
 }
