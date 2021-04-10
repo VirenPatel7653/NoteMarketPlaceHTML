@@ -16,8 +16,9 @@ namespace NotesMarketPlace.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Account
+        
         NotesMarketPlaceEntities dbObj = new NotesMarketPlaceEntities();
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -122,6 +123,7 @@ namespace NotesMarketPlace.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SignUp(SignUpModel model)
@@ -155,8 +157,14 @@ namespace NotesMarketPlace.Controllers
 
 
             ViewData["success"] = "Your account has been successfully created.";
-            SendVerificationLinkEmail(user);
+            try
+            {
+                SendVerificationLinkEmail(user);
+            }
+            catch (Exception e)
+            {
 
+            }
             
             ModelState.Clear();
             return View("SignUp");
@@ -167,6 +175,7 @@ namespace NotesMarketPlace.Controllers
         {
             return View();
         }
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(ForgotPasswordModel model)
@@ -191,7 +200,14 @@ namespace NotesMarketPlace.Controllers
             string body = "Hello,<br/>We have generated a new password for you "
                 + " <br/>Password:"+ Crypto.DecryptBase64(existUser.Password) + "<br/>Regards,<br/>Notes Marketplace";
 
-            SendEmail(existUser.EmailID, subject, body);
+            try
+            {
+                SendEmail(existUser.EmailID, subject, body);
+            }
+            catch (Exception e)
+            {
+
+            }
             ViewData["success"] = "Your password has been changed successfully and newly generated password is sent on your registered email address.";
             ModelState.Clear();
 
@@ -216,7 +232,9 @@ namespace NotesMarketPlace.Controllers
             {
                 existUser.Password = Crypto.EncryptBase64(model.NewPassword);
                 dbObj.SaveChanges();
-                return RedirectToAction("SellYourNotes","Notes");
+                TempData["Success"] = "Your Password has been changed successfully.";
+                return RedirectToAction("Login", "Account");
+                 
             }
             ViewBag.Message = "Invalid credential provided";
             return View();
@@ -291,6 +309,7 @@ namespace NotesMarketPlace.Controllers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
             };
+
             smtp.Send(mail);
         }
 

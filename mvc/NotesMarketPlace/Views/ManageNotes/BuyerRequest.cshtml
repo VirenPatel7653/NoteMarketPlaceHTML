@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<NotesMarketPlace.Models.BuyerRequestsModel>
 @{
-    ViewBag.Title = "BuyerRequest";
+    ViewBag.Title = "Buyer Request - Notes MarketPlace";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -170,7 +170,7 @@
                     }
                 },
                 bFilter: false,
-                ordering: false,
+                ordering: true,
                 searching: true,
                 "dom": '<"top">rt<"bottom"p>'
 
@@ -189,7 +189,7 @@
             swal({
                 title: "Are you sure?",
                 text: " you want to allow this note for download",
-                icon: "error",
+                icon: "info",
                 buttons: ["No","Yes"],
             })
                 .then((willDelete) => {

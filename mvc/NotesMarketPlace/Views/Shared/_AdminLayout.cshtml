@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -37,30 +37,25 @@
                             </li>
                             <li class="nav-item">
                                 <div class="dropdown">
-                                    <a class="nav-link mt-3" href="@Url.Action("","")" id="notesdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav">Notes</b></a>
+                                    <a class="nav-link mt-3" id="notesdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="NotesUnderReview" || ViewContext.RouteData.Values["Action"].ToString()=="PublishedNotes" || ViewContext.RouteData.Values["Action"].ToString()=="DownloadedNotes" || ViewContext.RouteData.Values["Action"].ToString()=="RejectedNotes" ?"nav-active":"")">Notes</b></a>
                                     <div class="dropdown-menu custom-mobile-dropdown" aria-labelledby="notesdropdownMenu">
-                                        <a class="dropdown-item" href="@Url.Action("","")">Notes Under Review</a>
-                                        <a class="dropdown-item" href="@Url.Action("","")">Published Notes</a>
-                                        <a class="dropdown-item" href="@Url.Action("","")">Downloaded Notes</a>
-                                        <a class="dropdown-item" href="@Url.Action("","")">Rejected Notes</a>
+                                        <a class="dropdown-item" href="@Url.Action("NotesUnderReview","Admin")">Notes Under Review</a>
+                                        <a class="dropdown-item" href="@Url.Action("PublishedNotes","Admin")">Published Notes</a>
+                                        <a class="dropdown-item" href="@Url.Action("DownloadedNotes","Admin")">Downloaded Notes</a>
+                                        <a class="dropdown-item" href="@Url.Action("RejectedNotes","Admin")">Rejected Notes</a>
 
                                     </div>
                                 </div>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link mt-3" href="@Url.Action("","")"><b class="white-nav">Members</b></a>
+                                <a class="nav-link mt-3" href="@Url.Action("Members","Admin")"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="Members"?"nav-active":"")">Members</b></a>
                             </li>
                             <li class="nav-item">
-
-
-
                                 <div class="dropdown">
-
-                                    <a class="nav-link mt-3" href="@Url.Action("","")" id="reportsdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav">Reports</b></a>
+                                    <a class="nav-link mt-3" id="reportsdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="SpamReports"?"nav-active":"")">Reports</b></a>
                                     <div class="dropdown-menu custom-mobile-dropdown" aria-labelledby="reportsdropdownMenu">
-                                        <a class="dropdown-item" href="@Url.Action("","")" Spam Reports</a>
-
+                                        <a class="dropdown-item" href="@Url.Action("SpamReports","Admin")">Spam Reports</a>
 
                                     </div>
                                 </div>
@@ -68,17 +63,31 @@
 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mt-3" href="@Url.Action("","")"><b class="white-nav">Settings</b></a>
+                                <div class="dropdown">
+                                    <a class="nav-link mt-3" id="settingsdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="" || ViewContext.RouteData.Values["Action"].ToString()=="" || ViewContext.RouteData.Values["Action"].ToString()=="" || ViewContext.RouteData.Values["Action"].ToString()=="" ?"nav-active":"")">Settings</b></a>
+                                    <div class="dropdown-menu custom-mobile-dropdown" aria-labelledby="settingsdropdownMenu">
+                                        @if (User.IsInRole("Super Admin"))
+                                        {
+                                            <a class="dropdown-item" href="@Url.Action("ManageSystemConfiguration", "ManageAdmin")">Manage System Configurations</a>
+                                            <a class="dropdown-item" href="@Url.Action("ManageAdministrator", "ManageAdmin")">Manage Administrator</a>
+                                        }
+                                        <a class="dropdown-item" href="@Url.Action("ManageCategory","ManageAdmin")">Manage Category</a>
+                                        <a class="dropdown-item" href="@Url.Action("ManageType","ManageAdmin")">Manage Types</a>
+                                        <a class="dropdown-item" href="@Url.Action("ManageCountry","ManageAdmin")">Manage Countries</a>
+
+                                    </div>
+                                </div>
+
                             </li>
                             <li class="nav-item">
                                 <div class="dropdown">
                                     <a href="@Url.Action("","")" class="nav-link mt-3" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src='@Url.Content("~/Content/images/Dashboard/user-img.png")' alt="User Photo" class="rounded-circle avatar-sm img-responsive" style="margin-right: 10px;">
+                                        <img src="" alt="User Photo" class="rounded-circle avatar-sm img-responsive dp" style="margin-right: 10px;">
                                     </a>
 
                                     <div class="dropdown-menu custom-mobile-dropdown" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="@Url.Action("","")">Update Profile</a>
-                                        <a class="dropdown-item" href="@Url.Action("","")">Change Password</a>
+                                        <a class="dropdown-item" href="@Url.Action("MyProfile","ManageAdmin")">Update Profile</a>
+                                        <a class="dropdown-item" href="@Url.Action("ChangePassword","Account")">Change Password</a>
                                         <a class="dropdown-item drop-logout" href="@Url.Action("Logout","Account")">Logout</a>
 
                                     </div>
@@ -88,17 +97,12 @@
                             @if (Request.IsAuthenticated)
                             {
 
-                                using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                                {
-                                    <li class="nav-item">
-                                        <a href="javascript:document.getElementById('logoutForm').submit()">
-                                            <button type="submit" class="btn btn-general btn-sm mt-3">Logout</button>
 
-                                        </a>
-
-                                    </li>
-}
+                                <li class="nav-item">
+                                    <button type="button" onclick="ConfirmLogout()" class="btn btn-general btn-sm mt-3">Logout</button>
+                                </li>
                             }
+
 
                         </ul>
 
@@ -115,19 +119,20 @@
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
-                                <a class="nav-link mt-2" href="@Url.Action("","")" id="notesdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav">Notes</b></a>
+                                <a class="nav-link mt-2" id="notesdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="NotesUnderReview" || ViewContext.RouteData.Values["Action"].ToString()=="PublishedNotes" || ViewContext.RouteData.Values["Action"].ToString()=="DownloadedNotes" || ViewContext.RouteData.Values["Action"].ToString()=="RejectedNotes" ?"nav-active":"")">Notes</b></a>
                                 <div class="dropdown-menu custom-other-dropdown" aria-labelledby="notesdropdownMenu">
-                                    <a class="dropdown-item" href="@Url.Action("","")">Notes Under Review</a>
-                                    <a class="dropdown-item" href="@Url.Action("","")">Published Notes</a>
-                                    <a class="dropdown-item" href="@Url.Action("","")">Downloaded Notes</a>
-                                    <a class="dropdown-item" href="@Url.Action("","")">Rejected Notes</a>
+
+                                    <a class="dropdown-item" href="@Url.Action("NotesUnderReview","Admin")">Notes Under Review</a>
+                                    <a class="dropdown-item" href="@Url.Action("PublishedNotes","Admin")">Published Notes</a>
+                                    <a class="dropdown-item" href="@Url.Action("DownloadedNotes","Admin")">Downloaded Notes</a>
+                                    <a class="dropdown-item" href="@Url.Action("RejectedNotes","Admin")">Rejected Notes</a>
 
                                 </div>
                             </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link mt-2" href="@Url.Action("","")"><b class="white-nav">Members</b></a>
+                            <a class="nav-link mt-2" href="@Url.Action("Members","Admin")"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="Members"?"nav-active":"")">Members</b></a>
                         </li>
                         <li class="nav-item">
 
@@ -135,9 +140,9 @@
 
                             <div class="dropdown">
 
-                                <a class="nav-link mt-2" href="@Url.Action("","")" id="reportsdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav">Reports</b></a>
+                                <a class="nav-link mt-2" id="reportsdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="SpamReports"?"nav-active":"")">Reports</b></a>
                                 <div class="dropdown-menu custom-other-dropdown" aria-labelledby="reportsdropdownMenu">
-                                    <a class="dropdown-item" href="@Url.Action("","")">Spam Reports</a>
+                                    <a class="dropdown-item" href="@Url.Action("SpamReports","Admin")">Spam Reports</a>
 
 
                                 </div>
@@ -146,18 +151,30 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mt-2" href="@Url.Action("","")"><b class="white-nav">Settings</b></a>
+                            <div class="dropdown">
+                                <a class="nav-link mt-2" id="settingsdropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b class="white-nav @(ViewContext.RouteData.Values["Action"].ToString()=="" || ViewContext.RouteData.Values["Action"].ToString()=="" || ViewContext.RouteData.Values["Action"].ToString()=="" || ViewContext.RouteData.Values["Action"].ToString()=="" ?"nav-active":"")">Settings</b></a>
+                                <div class="dropdown-menu custom-other-dropdown" aria-labelledby="settingsdropdownMenu">
+                                    @if (User.IsInRole("Super Admin"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("ManageSystemConfiguration", "ManageAdmin")">Manage System Configurations</a>
+                                        <a class="dropdown-item" href="@Url.Action("ManageAdministrator", "ManageAdmin")">Manage Administrator</a>
+                                    }
+                                    <a class="dropdown-item" href="@Url.Action("ManageCategory","ManageAdmin")">Manage Category</a>
+                                    <a class="dropdown-item" href="@Url.Action("ManageType","ManageAdmin")">Manage Types</a>
+                                    <a class="dropdown-item" href="@Url.Action("ManageCountry","ManageAdmin")">Manage Countries</a>
+                                </div>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
                                 <a href="@Url.Action("","")" class="nav-link " id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src='@Url.Content("~/Content/images/Dashboard/user-img.png")' alt="User Photo" class="rounded-circle avatar-sm img-responsive" style="margin-right: 10px;">
+                                    <img src="" alt="User Photo" class="rounded-circle avatar-sm img-responsive dp" style="margin-right: 10px;">
                                 </a>
 
                                 <div class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="@Url.Action("","")">Update Profile</a>
-                                    <a class="dropdown-item" href="@Url.Action("","")">Change Password</a>
-                                    <a class="dropdown-item drop-logout" href="@Url.Action("Logout","Account")">Logout</a>
+                                    <a class="dropdown-item" href="@Url.Action("MyProfile","ManageAdmin")">Update Profile</a>
+                                    <a class="dropdown-item" href="@Url.Action("ChangePassword","Account")">Change Password</a>
+                                    <a class="dropdown-item drop-logout" onclick="ConfirmLogout()">Logout</a>
 
                                 </div>
                             </div>
@@ -167,15 +184,13 @@
                         {
 
                             using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                            {
-                                <li class="nav-item">
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">
-                                        <button type="submit" class="btn btn-general btn-sm mt-0">Logout</button>
+                            { }
+                            <li class="nav-item">
 
-                                    </a>
+                                <button type="button" class="btn btn-general btn-sm mt-0" onclick="ConfirmLogout()">Logout</button>
 
-                                </li>
-                            }
+                            </li>
+
                         }
                     </ul>
 
@@ -214,5 +229,43 @@
     @Scripts.Render("~/bundles/js")
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
+
+<script>
+    $(function () {
+
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: '@Url.Action("Footer", "Home")',
+            type: "Post"
+        })
+            .done(function (d) {
+
+                if (d.DefaultMemberDisplayPicture != null) {
+                    $(".dp").attr("src", "/" + d.DefaultMemberDisplayPicture);
+                }
+
+
+            });
+    });
+
+        function ConfirmLogout() {
+            swal({
+                title: "Are you sure you want to logout?",
+                icon: "info",
+                buttons: ["No", "Yes"],
+
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        document.getElementById('logoutForm').submit();
+                    }
+                });
+        }
+
+</script>
+   
+
+
 </body>
 </html>

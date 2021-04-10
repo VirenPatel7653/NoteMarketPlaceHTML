@@ -1,0 +1,329 @@
+﻿@model NotesMarketPlace.Models.AdminMemberDetailsModel
+@{
+    ViewBag.Title = "Member Details - Notes MarketPlace";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@Styles.Render() {
+<style>
+   
+
+    table thead tr th {
+        border: hidden !important;
+    }
+
+    table tbody tr a,
+    table tbody tr a:hover,
+    table tbody tr a:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    tr td:nth-child(2),
+    tr td:nth-child(5) {
+        color: #6255a5;
+    }
+
+    tr td:nth-child(1),
+    tr td:nth-child(5),
+    tr td:nth-child(6) {
+        text-align: center;
+    }
+</style>
+
+
+}
+
+
+<main role="main" class="pt-5">
+    
+    <div class="container" style="margin-top: 60px;">
+        <!-- Member Deails -->
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="heading">Member Details</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="card mb-3" style="border:none;">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                            <img src="@Url.Content("~/"+Model.ProfilePicture)" class="card-img img-responsive" alt="...">
+                        </div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+
+
+                                    <table class="table table-borderless table-sm member-details border-right">
+                                        <tbody>
+
+                                            <tr>
+                                                <td scope="row" class="text-left notes-left">First Name:</td>
+                                                <td class="notes-right">@Model.FirstName</td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td scope="row" class="text-left notes-left ">Last Name:</td>
+                                                <td class="notes-right">@Model.LastName</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row" class="text-left notes-left">Email:</td>
+                                                <td class="notes-right">@Model.EmailID</td>
+                                            </tr>
+                                            @if (Model.DOB != null)
+                                            {
+                                                <tr>
+                                                    <td scope="row" class="text-left notes-left">DOB:</td>
+                                                    <td class="ext-right notes-right">@Model.DOB</td>
+                                                </tr>
+                                            }
+                                            @if (Model.Phonenumber != null)
+                                            {
+                                                <tr>
+                                                    <td scope="row" class="text-left notes-left">Phone Number:</td>
+                                                    <td class="notes-right">@Model.Phonenumber</td>
+                                                </tr>
+                                            }
+                                            @if (Model.College != null)
+                                            {
+                                                <tr>
+                                                    <td scope="row" class="text-left notes-left">College/University:</td>
+                                                    <td class="notes-right">@Model.College</td>
+                                                </tr>
+
+                                            }
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="table-responsive">
+
+                    <table class="table table-borderless table-sm member-details ">
+                        <tbody>
+                            @if (Model.AddressLine1 != null)
+                            {
+                                <tr>
+                                    <td scope="row" class="text-left notes-left">Address 1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td class="notes-right">@Model.AddressLine1</td>
+                                </tr>
+
+                            }
+                            @if (Model.AddressLine2 != null)
+                            {
+                                <tr>
+                                    <td scope="row" class="text-left notes-left ">Address 2:</td>
+                                    <td class="notes-right">@Model.AddressLine2</td>
+                                </tr>
+                            }
+                            @if (Model.City != null)
+                            {
+                                <tr>
+                                    <td scope="row" class="text-left notes-left">City:</td>
+                                    <td class="notes-right">@Model.City</td>
+                                </tr>
+                            }
+                            @if (Model.State != null)
+                            {
+                                <tr>
+                                    <td scope="row" class="text-left notes-left ">State:</td>
+                                    <td class="notes-right">@Model.State</td>
+                                </tr>
+                            }
+
+                            @if (Model.Country != null)
+                            {
+                                <tr>
+                                    <td scope="row" class="text-left notes-left">Country:</td>
+                                    <td class="notes-right">@Model.Country</td>
+                                </tr>
+                            }
+
+                            @if (Model.ZipCode != null)
+                            {
+                        <tr>
+                            <td scope="row" class="text-left notes-left">Zip Code:</td>
+                            <td class="notes-right">@Model.ZipCode</td>
+                        </tr>
+                            }
+                            
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!-- Member Deails End -->
+
+        <hr>
+        <!-- Table Heading -->
+        <div class="row" style="margin-top: 60px;">
+            <div class="col-md-6">
+                <h1 class="dashboard-table-heading mt-2 mb-3">Notes</h1>
+            </div>
+        </div>
+        <!-- Table Heading End-->
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table custom-table" data-pagination="true" id="publishedNotes">
+
+                <thead>
+                <th class="text-center">SR NO.</th>
+                <th>NOTE TITLE</th>
+                <th>CATEGORY</th>
+                <th>STATUS</th>
+                <th class="text-center">DOWNLOADED NOTES</th>
+                <th class="text-center">TOTAL EARNINGS</th>
+                <th>DATE ADDED</th>
+                <th>PUBLISHED DATE</th>
+                <th></th>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var n in Model.ListOfNotes)
+                    {
+                        <tr>
+
+                            <td>@i</td>
+
+                            <td>
+                                <a href="@Url.Action("NoteDetails", "Notes", new { id = @n.NoteID })">
+                                    @n.Title
+                                </a>
+
+                            </td>
+                            <td>@n.Category</td>
+                            <td>@n.Status</td>
+                            <td>
+
+                                @if (@n.NoOfDownloadedNotes == "0")
+                                {
+
+                                    @n.NoOfDownloadedNotes
+
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("DownloadedSpecific", "Admin", new { id = @n.NoteID })">
+                                    @n.NoOfDownloadedNotes
+                                    </a>
+                                }
+
+
+                            </td>
+
+                            <td>$@n.TotalEarnings</td>
+                            <td>@n.DateAdded</td>
+                            <td>@n.PublishedDate</td>
+
+                            <td>
+                                <div class="dropdown dropleft">
+
+                                    <i class="fa fa-ellipsis-v " id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #d1d1d1"></i>
+                                    <div class="dropdown-menu menu-dropdown" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="@Url.Action("DownloadNote", "Admin", new { id = n.NoteID })">Download Notes</a>
+                                    </div>
+                                </div>
+                            </td>
+
+
+                        </tr>
+                        i++;
+
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+        <!-- Table End-->
+
+    </div>
+</main>
+
+
+@section Scripts{
+    @if (@TempData["Success"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Success"]",
+                     icon: "success",
+                     buttons: {
+                         confirm: { text: 'Ok', className: 'sweet-primary' },
+
+                     },
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
+
+
+    <script type="text/javascript">
+                     
+        $(document).ready(function () {
+
+            var table = $('#publishedNotes').DataTable({
+                "pageLength": 5,
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-right fa-2x"></i>',
+                        previous: ' <i class="fa fa-angle-left fa-2x"></i>',
+                        first: false,
+                        last: false
+                    }
+                },
+                bFilter: false,
+                ordering: true,
+                searching: true,
+                "dom": '<"top">rt<"bottom"p>'
+
+            });
+            $('.dataTables_length').addClass('bs-select');
+
+
+            $("#searchbtn").click(function () {
+                var x = $("#searchinput").val();
+                table.search(x).draw();
+            });
+
+          
+
+        });
+
+                     
+    </script>
+}

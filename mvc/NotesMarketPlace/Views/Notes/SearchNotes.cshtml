@@ -1,6 +1,6 @@
 ﻿@model NotesMarketPlace.Models.SearchNotesViewModel
 @{
-    ViewBag.Title = "SearchNotes";
+    ViewBag.Title = "Search Notes - Notes MarketPlace";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render(){
@@ -18,13 +18,6 @@
         .paginationjs-pages > ul > li {
             display: inline;
         }
-  @*  .paginationjs-prev a,
-    .paginationjs-next a {
-        border: none !important;
-        color: #333333 !important;
-    }*@
-
-
 
     .paginationjs-pages > ul > li > a {
         border: none !important;
@@ -165,8 +158,6 @@
             </div>
         </div>
     </div>
-
-
     <!-- Pagination End -->
 </main>
 
@@ -182,7 +173,7 @@
 
         texttotal = `<div class="container"><div class="row">`;
         for (var i = 0; i < d.length; i++) {
-            text1 = `<div class="col-xl-4 col -md-4 col-sm-6"><div class="card book-card"><img src="${d[i].DisplayPicture}" class="card-img-top" width="450px" height="250px;" alt=${d["Title"]}>`
+            text1 = `<div class="col-xl-4 col-md-4 col-sm-6"><div class="card book-card"><img src="${d[i].DisplayPicture}" class="card-img-top" width="450px" height="250px;" alt=${d["Title"]}>`
                 + ` <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
@@ -195,7 +186,7 @@
             texttotal = texttotal + text1;
             if (d[i].UniversityName != null) {
                 text1 = ` <div class="col-md-12">
-                                        <p class="card-detail"> <i> <img src="/Content/images/Search/university.png" class="mr-2"></i>${d[i].UniversityName}</p >
+                                        <p class="card-detail"> <i> <img src="/Content/images/Search/university.png" class="mr-2"></i>${d[i].UniversityName} ${d[i].Country!=null?","+d[i].Country:""}</p >
                                     </div>`;
                 texttotal = texttotal + text1;
             }
@@ -299,7 +290,7 @@
                 var RatingList = $("#RatingList").val();
                 var UniversityList = $("#UniversityList").val();
                 var CourseList = $("#CourseList").val();
-                console.log(UniversityList);
+               
                 $.ajax({
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

@@ -1,7 +1,17 @@
-﻿@model NotesMarketPlace.Models.NoteViewModel
+﻿
+@model NotesMarketPlace.Models.NoteViewModel
 @{
-    ViewBag.Title = "NoteDetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Note Details - Notes MarketPlace";
+    if (User.IsInRole("Member"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    }
 }
 
 <main role="main" class="pt-5">
@@ -23,6 +33,7 @@
                         </div>
                         <div class="col-md-7">
                             <div class="card-body">
+
                                 <h1 class="heading mt-1">@Model.Title</h1>
                                 <p class="note-details-subheading">@Model.Category</p>
                                 <p class="note-details-para">@Model.Description</p>
@@ -31,8 +42,16 @@
                                 {
                                     if (Model.IsPaid == "Paid")
                                     {
+                                        if (User.IsInRole("Member"))
+                                        {
+                                            <button type="button" class="btn btn-general px-3 dowbtn" onclick="confirmpaid()">DOWNLOAD / $ @Model.SellingPrice</button>
 
-                                        <button type="button" class="btn btn-general px-3 dowbtn" onclick="confirmpaid()">DOWNLOAD / $ @Model.SellingPrice</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-general px-3 dowbtn" onclick="location.href ='@Url.Action("DownloadNote","Admin",new {id =@Model.ID,uploadNotes =@Model.UploadNotes ,uploadNotesName=@Model.UploadNotesName})' ">DOWNLOAD / $ @Model.SellingPrice</button>
+
+                                        }
 
                                     }
                                     else
@@ -199,11 +218,21 @@
                                     {
                                         <div class="media">
                                             <img src="@Url.Content("~/" + r.ReviewerPhoto)" class="align-self-start mr-3 rounded-circle customer-img" alt="...">
+
+
                                             <div class="media-body">
+
                                                 <h1 class="customer-name">@r.ReviewerFullName</h1>
+
                                                 <span class="stars" data-rating=@r.Ratings data-num-stars="5"></span>
                                                 <p class="customer-para">@r.Comments</p>
                                             </div>
+                                            @if (!User.IsInRole("Member"))
+                                            {
+                                                <img src="@Url.Content("~/Content/images/Dashboard/delete.png")" onclick="deleteReview('@r.ID')" class="ml-auto" width="18px" class="ml-2" height="20px" alt="delete">
+
+
+                                            }
                                         </div>
                                         <hr>
                                     }
@@ -216,37 +245,147 @@
                     </div>
                 </div>
             }
+        </div>
+    </div>
+    <div class="modal fade" id="thankyouModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog popup-margin">
+            <div class="modal-content">
+                <div class="modal-header pb-0 ml-4" style="border-bottom: none;">
+
+
+                    <button type="button" class="close cl" style="margin-top: -20px;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body thanks-popup mt-0 pt-0" style="padding: 50px 55px 30px 40px;">
+
+                    <div class="row">
+                        <div class="col-md-12 text-center mb-3">
+                            <img src="@Url.Content("~/Content/images/Notes-Details/SUCCESS.png")" width="63px" height="63px" alt="success">
+
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <h5 class="modal-title mt-0 about-sub-heading p-0" id="exampleModalLabel">Thank you for purchasing!</h5>
+                        </div>
+
+                    </div>
+                    <div id="thankyoubody">
+
+                    </div>
+
+
+                </div>
+
+
             </div>
+
+        </div>
     </div>
 </main>
 
 @section Scripts{
-    <script type="text/javascript">
+    @if (@TempData["Success"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Success"]",
+                     icon: "success",
+                     buttons: {
+                         confirm: { text: 'Ok', className: 'sweet-primary' },
+
+                     },
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
+        <script type="text/javascript">
         $(function () {
             $('.stars').stars();
             $('#test').hide();
         });
+        function deleteReview(id) {
+
+             swal({
+                 title: "Are you sure you want to delete this review?",
+                 icon: "error",
+                 buttons: ["No", "Yes"],
+             })
+                 .then((willDelete) => {
+                     if (willDelete != null) {
+
+                         window.location.href = '@Url.Action("DeleteReview", "Admin")/?id=' + id;
+
+                     }
+                 });
+    }
+
 
         function confirmpaid() {
             swal({
                 title: "Are you sure?",
                 text: "you want to download this Paid note. Please confirm.",
                 icon: "info",
-                buttons: ["No","Yes"],
-                
+                buttons: ["No", "Yes"],
+
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        swal("You have to Pay $ @Model.SellingPrice and wait for seller's confirmation", {
-                            icon: "success",
-                           
-                        }).then(function() {
-                            window.location = "@Url.Action("DownloadPaidNotes","Notes",new {id = @Model.ID, uploadNotes= @Model.UploadNotes})";
-                        });
-                    } 
-                });
-        }
+                        var id =  @Model.ID;
+                        var uploadNotes = "@Model.UploadNotes";
 
-    </script>
+                        $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            url: '@Url.Action("DownloadPaidNotes", "Notes",new {@id = Model.ID, @uploadNotes=Model.UploadNotes })',
+                            type: "GET",
+                        })
+                        .done(function (d) {
 
-}
+
+                            var ht = ` <div class="row">
+                        <div class="col-md-12 ">
+                            <h6 class="sub-heading mb-2">Dear ${d.BuyerName},</h6>
+
+                        </div>
+                        <div class="col-md-12">
+                            <p class="para">As this is paid notes- you need to pay to seller ${d.SellerName} offline.We will send him an email that you want to download this note. He may contact you futther for payment process completion.</p>
+                            <p class="para">
+                                In case,you have urgency, <br>Please contact us on ${d.SupportContact}.
+                            </p>
+                            <p class="para">Once he receives the payment and acknowledge us- selected notes you can see over my downloads tab for download.</p>
+                            <p class="para">
+                                Have a good day.
+                            </p>
+                        </div>
+                    </div>`;
+                            $("#thankyoubody").html(ht);
+
+                                $('#thankyouModel').modal('show');
+
+
+                         });
+                    }
+                    });
+
+
+                }
+        </script>
+
+    }

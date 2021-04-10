@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.13.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>packages\DotNetZip.1.13.0\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -194,6 +197,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageAdminController.cs" />
     <Compile Include="Controllers\ManageNotesController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
@@ -204,6 +208,24 @@
     </Compile>
     <Compile Include="Models\AddInAppropriateModel.cs" />
     <Compile Include="Models\AddReviewModel.cs" />
+    <Compile Include="Models\AdminDashboardViewModel.cs" />
+    <Compile Include="Models\AdminDownloadedNotesModel.cs" />
+    <Compile Include="Models\AdministratorModel.cs" />
+    <Compile Include="Models\AdministratorViewModel.cs" />
+    <Compile Include="Models\AdminManageCategoryViewModel.cs" />
+    <Compile Include="Models\AdminManageCountryViewModel.cs" />
+    <Compile Include="Models\AdminManageTypeViewModel.cs" />
+    <Compile Include="Models\AdminMemberDetailsModel.cs" />
+    <Compile Include="Models\AdminMemberDetailsNotesModel.cs" />
+    <Compile Include="Models\AdminMemberViewModel.cs" />
+    <Compile Include="Models\AdminNotesUnderReviewModel.cs" />
+    <Compile Include="Models\AdminNotesUnderReviewViewModel.cs" />
+    <Compile Include="Models\AdminProfileModel.cs" />
+    <Compile Include="Models\AdminPublishedNotesModel.cs" />
+    <Compile Include="Models\AdminPublishedViewModel.cs" />
+    <Compile Include="Models\AdminRejectedNotesModel.cs" />
+    <Compile Include="Models\AdminRejectedNotesViewModel.cs" />
+    <Compile Include="Models\AdminSpamReportsModel.cs" />
     <Compile Include="Models\BuyerRequestsModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CustomerReviewModel.cs" />
@@ -212,6 +234,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\AddNoteModel.cs" />
     <Compile Include="Models\ManageConfigurationModel.cs" />
+    <Compile Include="Models\ManageSystemConfigurationModel.cs" />
     <Compile Include="Models\MyDownloadsModel.cs" />
     <Compile Include="Models\MyDownloadsViewModel.cs" />
     <Compile Include="Models\MyRejectedNotesModel.cs" />
@@ -220,7 +243,9 @@
     <Compile Include="Models\SearchNotesViewModel.cs" />
     <Compile Include="Models\SellYourNotesViewModel.cs" />
     <Compile Include="Models\SignUpModel.cs" />
+    <Compile Include="Models\ThankyouModel.cs" />
     <Compile Include="Models\UserProfileModel.cs" />
+    <Compile Include="Models\UserRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -643,6 +668,23 @@
     <Content Include="Views\ManageNotes\MySoldNotes.cshtml" />
     <Content Include="Views\ManageNotes\MyRejectedNotes.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Admin\NotesUnderReview.cshtml" />
+    <Content Include="Views\Admin\PublishedNotes.cshtml" />
+    <Content Include="Views\Admin\DownloadedNotes.cshtml" />
+    <Content Include="Views\Admin\RejectedNotes.cshtml" />
+    <Content Include="Views\Admin\Members.cshtml" />
+    <Content Include="Views\Admin\MemberDetails.cshtml" />
+    <Content Include="Views\Admin\SpamReports.cshtml" />
+    <Content Include="Views\ManageAdmin\ManageCategory.cshtml" />
+    <Content Include="Views\ManageAdmin\SaveCategory.cshtml" />
+    <Content Include="Views\ManageAdmin\ManageType.cshtml" />
+    <Content Include="Views\ManageAdmin\SaveType.cshtml" />
+    <Content Include="Views\ManageAdmin\ManageCountry.cshtml" />
+    <Content Include="Views\ManageAdmin\SaveCountry.cshtml" />
+    <Content Include="Views\ManageAdmin\SaveAdministrator.cshtml" />
+    <Content Include="Views\ManageAdmin\ManageAdministrator.cshtml" />
+    <Content Include="Views\ManageAdmin\ManageSystemConfiguration.cshtml" />
+    <Content Include="Views\ManageAdmin\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

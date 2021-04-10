@@ -23,8 +23,16 @@ namespace NotesMarketPlace.Controllers
         [HttpGet]
         public ActionResult ContactUs()
         {
+            var email = User.Identity.Name;
+            ContactU model = new ContactU();
+            if(email!="")
+            {
+                User u = dbObj.Users.Where(a => a.EmailID == email).FirstOrDefault();
+                model.FullName = u.FirstName + " " + u.LastName;
+                model.Email = u.EmailID;
+            }
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -37,8 +45,6 @@ namespace NotesMarketPlace.Controllers
                 return View("ContactUs");
             }
             model.QueryDate = DateTime.Now;
-            
-
             ManageConfigurationModel m = new ManageConfigurationModel();
             m.SupportEmailAddress = dbObj.SystemConfigurations.Where(a => a.Key == "SupportEmailAddress").FirstOrDefault().Value;
 
@@ -49,17 +55,25 @@ namespace NotesMarketPlace.Controllers
             try 
             {
                 SendEmail(m.SupportEmailAddress, subject, body);
-                dbObj.ContactUs.Add(model);
-                dbObj.SaveChanges();
-                ModelState.Clear();
-                ViewBag.Success = "Your Query has been sent successfully.";
+                
             }
             catch(Exception e)
             {
                 ViewBag.Error = "Something went wrong.";
             }
-
-            return View("ContactUs");
+            dbObj.ContactUs.Add(model);
+            dbObj.SaveChanges();
+            ModelState.Clear();
+            ViewBag.Success = "Your Query has been sent successfully.";
+            var email = User.Identity.Name;
+            ContactU model1 = new ContactU();
+            if (email != "")
+            {
+                User u = dbObj.Users.Where(a => a.EmailID == email).FirstOrDefault();
+                model1.FullName = u.FirstName + " " + u.LastName;
+                model1.Email = u.EmailID;
+            }
+            return View("ContactUs",model1);
         }
 
         public ActionResult FAQ()
@@ -71,9 +85,22 @@ namespace NotesMarketPlace.Controllers
         public ActionResult Footer()
         {
             ManageConfigurationModel model = new ManageConfigurationModel();
-            model.FBICON = dbObj.SystemConfigurations.Where(a => a.Key == "FBICON").FirstOrDefault().Value;
-            model.TWITTERICON = dbObj.SystemConfigurations.Where(a => a.Key == "TWITTERICON").FirstOrDefault().Value;
-            model.LNICON = dbObj.SystemConfigurations.Where(a => a.Key == "LNICON").FirstOrDefault().Value;
+             
+            SystemConfiguration FBICON = dbObj.SystemConfigurations.Where(a => a.Key == "FBICON").FirstOrDefault();
+            if(FBICON!=null)
+            {
+                model.FBICON = FBICON.Value;
+            }
+            SystemConfiguration TWITTERICON = dbObj.SystemConfigurations.Where(a => a.Key == "TWITTERICON").FirstOrDefault();
+            if (TWITTERICON != null)
+            {
+                model.TWITTERICON = TWITTERICON.Value;
+            }
+            SystemConfiguration LNICON = dbObj.SystemConfigurations.Where(a => a.Key == "LNICON").FirstOrDefault();
+            if (LNICON != null)
+            {
+                model.LNICON = LNICON.Value;
+            }
             if (Request.IsAuthenticated)
             {
                 var email = User.Identity.Name;
@@ -85,12 +112,14 @@ namespace NotesMarketPlace.Controllers
                 }
                 else
                 {
-                    model.DefaultMemberDisplayPicture = dbObj.SystemConfigurations.Where(a => a.Key == "DefaultMemberDisplayPicture").FirstOrDefault().Value;
-
+                
+                    SystemConfiguration DefaultMemberDisplayPicture = dbObj.SystemConfigurations.Where(a => a.Key == "DefaultMemberDisplayPicture").FirstOrDefault();
+                    if (DefaultMemberDisplayPicture != null)
+                    {
+                        model.DefaultMemberDisplayPicture = DefaultMemberDisplayPicture.Value;
+                    }
                 }
             }
-           
-
             return Json(model);
         }
 

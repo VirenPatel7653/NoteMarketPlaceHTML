@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>SignUp - Notes MarketPlace</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     @Styles.Render("~/Content/css")
@@ -24,7 +24,9 @@
                     <div class="h-100 justify-content-center d-flex" style="flex-direction: column;">
 
                         <div class="col-md-12 text-center my-3">
-                            <img src="@Url.Content("~/Content/images/pre-login/top-logo.png")" class="img-responsive logo" alt="marketplace">
+                            <a href='@Url.Action("Index","Home")'>
+                                <img src="@Url.Content("~/Content/images/pre-login/top-logo.png")" class="img-responsive logo" alt="marketplace">
+                            </a>
                         </div>
                         <div class="card mb-3">
                             <div class="card-body m-0">

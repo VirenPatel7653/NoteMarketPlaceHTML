@@ -16,14 +16,6 @@ namespace NotesMarketPlace.Models
         public List<SelectListItem> UniversityList { get; set; }
         public List<SelectListItem> CourseList { get; set; }
         public List<SelectListItem> RatingList { get; set; }
-
-       /* public string Category { get; set; }
-        public string Type { get; set; }
-        public string Country { get; set; }
-        public string University { get; set; }
-        public string Course { get; set; }
-        public string Rating { get; set; }
-        public string Search { get; set; }
-*/
+             
     }
 }

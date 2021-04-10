@@ -1,0 +1,110 @@
+﻿@model NotesMarketPlace.Models.AdministratorViewModel
+@{
+    ViewBag.Title = "Add Administrator - Notes MarketPlace";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main role="main" class="pt-5">
+    <!--Add Administrator Form-->
+    <div class="container form-placeholder">
+        @using (Html.BeginForm("SaveAdministrator", "ManageAdmin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading">Add Administrator</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Admin.FirstName) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.Admin.FirstName, new { @class = "form-control focus", placeholder = "Enter First Name" })
+                        @Html.ValidationMessageFor(m => m.Admin.FirstName)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Admin.LastName) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.Admin.LastName, new { @class = "form-control focus", placeholder = "Enter Last Name" })
+                        @Html.ValidationMessageFor(m => m.Admin.LastName)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Admin.EmailID) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.Admin.EmailID, new { @class = "form-control focus", placeholder = "Enter Email Address" })
+                        @Html.ValidationMessageFor(m => m.Admin.EmailID)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Admin.PhoneNumber)
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.Admin.CountryPhoneCode, new SelectList(Model.CountryList, "Value", "Text"), htmlAttributes: new { @class = "form-control select-text" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Admin.PhoneNumber, new { @class = "form-control focus", placeholder = "Enter Phone Number" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    @Html.HiddenFor(m => m.Admin.ID, 0)
+                    <button type="submit" class="btn btn-general mt-2 px-5 py-1">SUBMIT</button>
+
+                </div>
+            </div>
+        }
+    </div>
+    <!--Add Administrator Form End-->
+</main>
+
+
+@section Scripts{
+    @if (@TempData["Success"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Success"]",
+                     icon: "success",
+                     buttons: {
+                         confirm: { text: 'Ok', className: 'sweet-primary' },
+
+                     },
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
+
+}
+
+

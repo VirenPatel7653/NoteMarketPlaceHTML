@@ -11,7 +11,8 @@ namespace NotesMarketPlace.Context
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Country
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,11 @@ namespace NotesMarketPlace.Context
         }
     
         public int ID { get; set; }
+        [Required(ErrorMessage = "Country Name is Required")]
+        [Display(Name = "Country Name")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Country Code is Required")]
+        [Display(Name = "Country Code")]
         public string CountryCode { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }

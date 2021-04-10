@@ -1,6 +1,6 @@
 ﻿@model NotesMarketPlace.Models.MyDownloadsViewModel
 @{
-    ViewBag.Title = "MyDownloadsNotes";
+    ViewBag.Title = "My Downloads Notes - Notes MarketPlace";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,12 +21,7 @@
         text-decoration: none;
         color: inherit;
     }
-
-   @* .swal-button--confirm,
-    .swal-button--confirm:hover,
-    .swal-button--confirm:focus {
-        background: #e01d1d !important;
-    }*@
+      
 </style>
 
 }
@@ -193,6 +188,7 @@
         </div>
     </div>
     <!-- Add Review Modal End -->
+
     <!-- In Appropriate Modal -->
     <div class="modal fade" id="inappropriate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog popup-margin">
@@ -306,7 +302,7 @@
                     }
                 },
                 bFilter: false,
-                ordering: false,
+                ordering: true,
                 searching: true,
                 "dom": '<"top">rt<"bottom"p>'
 

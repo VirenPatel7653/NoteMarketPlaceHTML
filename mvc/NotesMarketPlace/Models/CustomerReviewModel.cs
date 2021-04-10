@@ -14,5 +14,6 @@ namespace NotesMarketPlace.Models
         public string ReviewerPhoto { get; set; }
         public decimal Ratings { get; set; }
         public string Comments { get; set; }
+        public DateTime createdDate { get; set; }
     }
 }

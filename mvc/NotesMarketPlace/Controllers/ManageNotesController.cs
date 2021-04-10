@@ -11,10 +11,10 @@ using System.Web.Mvc;
 
 namespace NotesMarketPlace.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Member")]
     public class ManageNotesController : Controller
     {
-        // GET: ManageNotes
+       
         NotesMarketPlaceEntities dbObj = new NotesMarketPlaceEntities();
         [HttpGet]
         public ActionResult BuyerRequest()
@@ -62,12 +62,20 @@ namespace NotesMarketPlace.Controllers
             string body = "Hello " + buyer.FirstName + ",<br> We would like to inform you that," + seller.FirstName + " Allows you to download a note." +
                 "Please login and see My Download tabs to download particular note." +
                 "<br>Regards,<br>Notes Marketplace";
-            SendEmail(buyer.EmailID, subject, body);
+            try
+            {
+                SendEmail(buyer.EmailID, subject, body);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
             TempData["Success"] = "Successfully Done.";
 
             return RedirectToAction("BuyerRequest");
         }
-
         
         [HttpGet]
         public ActionResult MyDownloadsNotes()
@@ -116,7 +124,6 @@ namespace NotesMarketPlace.Controllers
             Response.End();
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddReview(MyDownloadsViewModel model)
@@ -213,8 +220,15 @@ namespace NotesMarketPlace.Controllers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(mailmessage.From.Address, fromEmailPassword)
             };
-            
-            smtp.Send(mailmessage);
+
+            try
+            {
+                smtp.Send(mailmessage);
+            }
+            catch (Exception e)
+            {
+
+            }
             TempData["Success"] = "Your spam report added successfully";
 
             return RedirectToAction("MyDownloadsNotes", "ManageNotes");
@@ -235,9 +249,14 @@ namespace NotesMarketPlace.Controllers
                 b.Title = d.NoteTitle;
                 b.Category = d.NoteCategory;
                 var buyer = dbObj.Users.Where(a => a.ID == d.Downloader).FirstOrDefault();
-                var buyer_phonenumber = dbObj.UserProfiles.Where(a => a.UserID == buyer.ID).FirstOrDefault().Phonenumber;
+                
+                var user  = dbObj.UserProfiles.Where(a => a.UserID == buyer.ID).FirstOrDefault();
+                if(user !=null)
+                {
+                    var buyer_phonenumber = user.Phonenumber;
+                    b.BuyerPhoneNumber = buyer_phonenumber;
+                }
                 b.Buyer = buyer.EmailID;
-                b.BuyerPhoneNumber = buyer_phonenumber;
                 b.SellType = d.IsPaid ? "Paid" : "Free";
                 b.SellingPrice = Decimal.Parse(d.PurchasedPrice.ToString());
                 b.DownloadedDate = DateTime.Parse(d.CreatedDate.ToString());

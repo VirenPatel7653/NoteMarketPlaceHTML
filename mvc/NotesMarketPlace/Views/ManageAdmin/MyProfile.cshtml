@@ -1,0 +1,123 @@
+﻿@model NotesMarketPlace.Models.AdminProfileModel
+@{
+    ViewBag.Title = "My Profile - Notes MarketPlace";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!--My Profile Form-->
+<div class="container form-placeholder">
+    @using (Html.BeginForm("SaveMyProfile", "ManageAdmin", FormMethod.Post, new
+    {
+        enctype = "multipart/form-data"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="heading field-heading ">My Profile</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName) <sup class="text-danger">&nbsp;*</sup>
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control focus", placeholder = "Enter First Name" })
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName) <sup class="text-danger">&nbsp;*</sup>
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control focus", placeholder = "Enter Last Name" })
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email) <sup class="text-danger">&nbsp;*</sup>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control focus", placeholder = "Enter Email", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SecondaryEmailAddress)
+                    @Html.TextBoxFor(m => m.SecondaryEmailAddress, new { @class = "form-control focus", placeholder = "Enter your email address" })
+                    @Html.ValidationMessageFor(m => m.SecondaryEmailAddress)
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Phonenumber)
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            @Html.DropDownListFor(m => m.Phonenumber_CountryCode, new SelectList(Model.CountryList, "Value", "Text"), htmlAttributes: new { @class = "form-control select-text" })
+                            @Html.ValidationMessageFor(m => m.Phonenumber_CountryCode)
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.Phonenumber, new { @class = "form-control focus", placeholder = "Enter your phone number" })
+                            @Html.ValidationMessageFor(m => m.Phonenumber)
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    <label for="file-input" style="display: block;">
+
+                        <div class="image-upload custom-file-box py-4">
+
+                            <img src="@Url.Content("~/Content/images/User-Profile/upload.png")" width="40px" height="60px" alt="uploadpicture" />
+                            <figcaption id="uploadpicture" class="select-text">
+                                @if (Model.ProfilePictureName != null)
+                                {
+                                    <p>@Model.ProfilePictureName.Split('/').Last()</p>
+                                }
+                                else
+                                {
+                                    <p>Upload a Picture</p>
+                                }
+                            </figcaption>
+
+                            <input id="file-input" type="file" accept="image/*" name="ProfilePicture" onchange="showname(this)" />
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4">
+                @Html.HiddenFor(m => m.ID)
+                <button type="submit" class="btn btn-general mt-2 px-5 py-1 mb-5">SUBMIT</button>
+
+            </div>
+        </div>
+    }
+</div>
+<!--My Profile Form End-->
+@section Scripts
+{
+    <script type="text/javascript">
+        function showname(e) {
+            var name = e.files;
+            document.getElementById("uploadpicture").innerHTML = name[0].name
+        }
+    </script>
+}

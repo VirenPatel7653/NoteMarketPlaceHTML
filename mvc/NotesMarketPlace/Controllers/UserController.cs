@@ -11,11 +11,12 @@ using System.Web.Mvc;
 
 namespace NotesMarketPlace.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Member")]
     public class UserController : Controller
     {
-        // GET: User
+        
         NotesMarketPlaceEntities dbObj = new NotesMarketPlaceEntities();
+        
         [HttpGet]
         public ActionResult UserProfile()
         {
@@ -64,6 +65,7 @@ namespace NotesMarketPlace.Controllers
 
             return View(user);
         }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UserProfile(UserProfileModel model)
@@ -122,7 +124,8 @@ namespace NotesMarketPlace.Controllers
             }
             user.UserID = model.UserID;
             user.DOB = (model.DOB != null) ? model.DOB : null;
-            user.Gender = (model.Gender != -1) ? (model.Gender) : 3;
+            int unknown_id = dbObj.ReferenceDatas.Where(a => a.RefCategory == "Gender" && a.Value == "Unknown").FirstOrDefault().ID;
+            user.Gender = (model.Gender != -1) ? (model.Gender) : unknown_id;
             user.Phonenumber_CountryCode = (model.Phonenumber_CountryCode != null)? model.Phonenumber_CountryCode:null;
             user.Phonenumber = (model.Phonenumber != null)? model.Phonenumber:null;
             try
@@ -175,7 +178,6 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpGet]
-        
         public ActionResult EditProfile()
         {
             string email = User.Identity.Name;

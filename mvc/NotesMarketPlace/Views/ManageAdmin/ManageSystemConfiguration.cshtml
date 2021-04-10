@@ -1,0 +1,165 @@
+﻿@model NotesMarketPlace.Models.ManageSystemConfigurationModel
+@{
+    ViewBag.Title = "Manage System Configuration - Notes MarketPlace";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main role="main" class="pt-5">
+    <!-- Manage System Configuration Form-->
+    <div class="container form-placeholder">
+        @using (Html.BeginForm("SaveManageSystemConfiguration", "ManageAdmin", FormMethod.Post, new
+        {
+            enctype = "multipart/form-data"
+        }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading ">Manage System Configuration</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SupportEmailAddress) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.SupportEmailAddress, new { @class = "form-control focus", placeholder = "Enter Support Email Address" })
+                        @Html.ValidationMessageFor(m => m.SupportEmailAddress)
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SupportContactNumber) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.SupportContactNumber, new { @class = "form-control focus", placeholder = "Enter Phone Number" })
+                        @Html.ValidationMessageFor(m => m.SupportContactNumber)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmailAddressesForNotify) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.EmailAddressesForNotify, new { @class = "form-control focus", placeholder = "Enter Email Addresses" })
+                        @Html.ValidationMessageFor(m => m.EmailAddressesForNotify)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FBICON)
+                        @Html.TextBoxFor(m => m.FBICON, new { @class = "form-control focus", placeholder = "Enter Facebook url" })
+                        @Html.ValidationMessageFor(m => m.FBICON)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TWITTERICON)
+                        @Html.TextBoxFor(m => m.TWITTERICON, new { @class = "form-control focus", placeholder = "Enter Twitter url" })
+                        @Html.ValidationMessageFor(m => m.TWITTERICON)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LNICON)
+                        @Html.TextBoxFor(m => m.LNICON, new { @class = "form-control focus", placeholder = "Enter Linkedin url" })
+                        @Html.ValidationMessageFor(m => m.LNICON)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DisplayMemberPicture)
+                        <label for="file-input-notes" style="display: block;">
+
+                            <div class="image-upload custom-file-box py-4">
+
+                                <img src="@Url.Content("~/Content/images/User-Profile/upload.png")" width="40px" height="60px" alt="uploadpicture" />
+                                <figcaption id="uploadnotes" class="select-text">
+                                    @if (Model.DefaultMemberDisplayPicture != null)
+                                    {
+                                        <p>@Model.DefaultMemberDisplayPicture.Split('/').Last()</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Upload a Picture</p>
+                                    }
+
+                                </figcaption>
+                                <input id="file-input-notes" type="file" accept="image/*" name="DisplayMemberPicture" onchange="showname(this,'uploadnotes')" />
+
+                            </div>
+
+
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DisplayNotePicture)
+                        <label for="file-input-profile" style="display: block;">
+
+                            <div class="image-upload custom-file-box py-4">
+
+                                <img src="@Url.Content("~/Content/images/User-Profile/upload.png")" width="40px" height="60px" alt="uploadpicture" />
+                                <figcaption id="uploadpicture" class="select-text">
+                                    @if (Model.DefaultNoteDisplayPicture != null)
+                                    {
+                                        <p>@Model.DefaultNoteDisplayPicture.Split('/').Last()</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Upload a Picture</p>
+                                    }
+                                </figcaption>
+
+
+                                <input id="file-input-profile" type="file" accept="image/*" name="DisplayNotePicture" onchange="showname(this,'uploadpicture')" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-general mt-4 px-5 py-1 mb-5">SUBMIT</button>
+
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Manage System Configuration Form End-->
+</main>
+@section Scripts
+{
+
+        <script type="text/javascript">
+            function showname(e, idname) {
+                var name = e.files;
+
+                for (var i = 0; i < name.length; i++) {
+                    document.getElementById(idname).innerHTML = `${name[i].name}`;
+                }
+            }
+            </script>
+}

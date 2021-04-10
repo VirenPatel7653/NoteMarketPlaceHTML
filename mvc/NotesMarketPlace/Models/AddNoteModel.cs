@@ -27,8 +27,7 @@ namespace NotesMarketPlace.Models
 
         [Required(ErrorMessage = "Upload Notes is Required")]
         [Display(Name = "Upload Notes")]
-
-        public HttpPostedFileBase UploadNotes { get; set; }
+        public List<HttpPostedFileBase> UploadNotes { get; set; }
 
         public IEnumerable<SelectListItem> TypeList { get; set; }
 
@@ -36,6 +35,7 @@ namespace NotesMarketPlace.Models
         public Nullable<int> NoteType { get; set; }
 
         [Display(Name = "Number Of Pages")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Use Number only please")]
         public Nullable<int> NumberofPages { get; set; }
 
         [Required]

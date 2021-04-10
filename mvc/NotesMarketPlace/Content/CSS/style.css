@@ -408,6 +408,7 @@ select::-ms-expand {
 .book-card {
     border: 1px solid #d1d1d1;
     margin-bottom: 30px;
+    min-height:550px;
 }
 .card-detail {
     font-size: 16px;

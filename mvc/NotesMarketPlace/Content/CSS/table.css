@@ -24,7 +24,7 @@
     font-weight: 400;
     color: #333333;
 }
-.custom-table tr:not(:first-child):hover {
+.custom-table tbody tr:hover {
      -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
 }

@@ -1,0 +1,83 @@
+﻿@model NotesMarketPlace.Context.Country
+@{
+    ViewBag.Title = "Add Country - Notes MarketPlace";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main role="main" class="pt-5">
+    <!--Add Country Form-->
+    <div class="container form-placeholder">
+        @using (Html.BeginForm("SaveCountry", "ManageAdmin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="heading field-heading">Add Country</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control focus", placeholder = "Enter your country name" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CountryCode) <sup class="text-danger">&nbsp;*</sup>
+                        @Html.TextBoxFor(m => m.CountryCode, new { @class = "form-control focus", placeholder = "Enter your country code" })
+                        @Html.ValidationMessageFor(m => m.CountryCode)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    @Html.HiddenFor(m => m.ID, 0)
+                    <button type="submit" class="btn btn-general mt-2 px-5 py-1">SUBMIT</button>
+
+                </div>
+            </div>
+        }
+    </div>
+    <!--Add Country Form End-->
+</main>
+
+
+@section Scripts{
+    @if (@TempData["Success"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Success"]",
+                     icon: "success",
+                     buttons: {
+                         confirm: { text: 'Ok', className: 'sweet-primary' },
+
+                     },
+                });
+        });
+        </script>
+
+    }
+    @if (@TempData["Error"] != null)
+    {
+
+        <script type="text/javascript">
+        $(function () {
+                 swal({
+                    text: "@TempData["Error"]",
+                    icon: "error",
+                });
+        });
+        </script>
+
+    }
+
+
+}
