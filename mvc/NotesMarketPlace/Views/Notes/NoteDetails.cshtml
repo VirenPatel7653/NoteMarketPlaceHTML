@@ -2,16 +2,25 @@
 @model NotesMarketPlace.Models.NoteViewModel
 @{
     ViewBag.Title = "Note Details - Notes MarketPlace";
-    if (User.IsInRole("Member"))
+    if(User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("Member"))
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+        }
+    }
+    else
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
 
     }
-    else
-    {
-        Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
-    }
 }
 
 <main role="main" class="pt-5">
@@ -183,7 +192,7 @@
                         <div class="col-md-12">
                             <!-- responsive iframe -->
                             <div class="responsive-wrapper responsive-wrapper-padding-bottom-90pct" style="-webkit-overflow-scrolling: touch; overflow: auto; min-height: 550px;">
-                                <iframe src="@Url.Content("~/"+@Model.NotesPreview)">
+                                <iframe src="@Url.Content("~/"+@Model.NotesPreview)#toolbar=0">
                                     <p style="font-size: 110%;">
                                         <em>
                                             <strong>ERROR: </strong>
@@ -227,11 +236,14 @@
                                                 <span class="stars" data-rating=@r.Ratings data-num-stars="5"></span>
                                                 <p class="customer-para">@r.Comments</p>
                                             </div>
-                                            @if (!User.IsInRole("Member"))
-                                            {
-                                                <img src="@Url.Content("~/Content/images/Dashboard/delete.png")" onclick="deleteReview('@r.ID')" class="ml-auto" width="18px" class="ml-2" height="20px" alt="delete">
+                                            @if(User.Identity.IsAuthenticated)
+                                            { 
+                                                if(!User.IsInRole("Member"))
+                                                {
+                                                    <img src="@Url.Content("~/Content/images/Dashboard/delete.png")" onclick="deleteReview('@r.ID')" class="ml-auto" width="18px" class="ml-2" height="20px" alt="delete">
 
 
+                                                }
                                             }
                                         </div>
                                         <hr>

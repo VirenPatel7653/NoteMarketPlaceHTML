@@ -263,7 +263,7 @@ namespace NotesMarketPlace.Controllers
         [HttpGet]
         public ActionResult DownloadedNotes()
         {
-            List<Download> listOfNotes = dbObj.Downloads.Where(a => a.IsAttachmentDownloaded == true && a.Seller != a.Downloader).ToList();
+            List<Download> listOfNotes = dbObj.Downloads.Where(a => a.IsAttachmentDownloaded == true).ToList();
             List<AdminDownloadedNotesModel> listOfNotesDetails = new List<AdminDownloadedNotesModel>();
 
             foreach (Download d in listOfNotes)
@@ -615,6 +615,7 @@ namespace NotesMarketPlace.Controllers
             TempData["Success"] = "ReportedIssue deleted successfully";
             return RedirectToAction("SpamReports");
         }
+        
         [HttpGet]
         public ActionResult DeleteReview(int id)
         {

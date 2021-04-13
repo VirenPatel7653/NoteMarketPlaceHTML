@@ -30,9 +30,14 @@ namespace NotesMarketPlace.Controllers
         public ActionResult Login(LoginModel model)
         {
             string message = "";
-          
-                var v = dbObj.Users.Where(a => a.EmailID == model.EmailID).FirstOrDefault();
-                var userroleId = dbObj.UserRoles.Where(a => a.Name == "Member").FirstOrDefault().ID;
+
+            User v = dbObj.Users.Where(a => a.EmailID == model.EmailID).FirstOrDefault();
+            int userroleId = dbObj.UserRoles.Where(a => a.Name == "Member").FirstOrDefault().ID;
+            if(v==null)
+            {
+                ViewBag.Message = "User does not Exist";
+                return View("Login");
+            }
             if (v.RoleID == userroleId)
             {
                 if (v != null)

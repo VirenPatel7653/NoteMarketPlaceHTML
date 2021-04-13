@@ -89,40 +89,42 @@ namespace NotesMarketPlace.Controllers
             int NoteID = (RatingList != "") ? int.Parse(RatingList) : 0;
             int publish_id = dbObj.ReferenceDatas.Where(a => a.Value == "Published").FirstOrDefault().ID;
             List<SellerNote> listOfNotes = new List<SellerNote>();
-            List<SellerNote> temp = new List<SellerNote>();
-            if (CountryList != null)
+            List<SellerNote> countryFilter = dbObj.SellerNotes.Where(a=>a.Status== publish_id && a.IsActive== true).ToList();
+            List<SellerNote> categoryFilter = countryFilter;
+            List<SellerNote> ratingFilter = countryFilter;
+            List<SellerNote> universityFilter = countryFilter;
+            List<SellerNote> courseFilter = countryFilter;
+            List<SellerNote> typeFilter = countryFilter;
+            List<SellerNote> searchFilter = countryFilter;
+         
+
+            if (CountryList != "")
             {
-                temp = dbObj.SellerNotes.Where(a => a.Country == Country && a.Status == publish_id).ToList();
-                listOfNotes.AddRange(temp);
+                countryFilter = dbObj.SellerNotes.Where(a => a.Country == Country && a.Status == publish_id).ToList();
             }
-            if (CategoryList != null)
+            if (CategoryList != "")
             {
-                temp = dbObj.SellerNotes.Where(a => a.Category == Category && a.Status == publish_id).ToList();
-                listOfNotes.AddRange(temp);
+                categoryFilter = dbObj.SellerNotes.Where(a => a.Category == Category && a.Status == publish_id).ToList();
             }
-            if (RatingList != null)
+            if (RatingList != "")
             {
-                temp = dbObj.SellerNotes.Where(a => a.ID == NoteID && a.Status == publish_id).ToList();
-                listOfNotes.AddRange(temp);
+                ratingFilter = dbObj.SellerNotes.Where(a => a.ID == NoteID && a.Status == publish_id).ToList();
             }
-            if (UniversityList != null)
+            if (UniversityList != "")
             {
-                temp = dbObj.SellerNotes.Where(a => a.UniversityName == UniversityList && a.Status == publish_id).ToList();
-                listOfNotes.AddRange(temp);
+                universityFilter = dbObj.SellerNotes.Where(a => a.UniversityName == UniversityList && a.Status == publish_id).ToList();
             }
-            if (CourseList != null)
+            if (CourseList != "")
             {
-                temp = dbObj.SellerNotes.Where(a => a.Course == CourseList && a.Status == publish_id).ToList();
-                listOfNotes.AddRange(temp);
+                courseFilter = dbObj.SellerNotes.Where(a => a.Course == CourseList && a.Status == publish_id).ToList();
             }
-            if (TypeList != null)
+            if (TypeList != "")
             {
-                temp = dbObj.SellerNotes.Where(a => a.NoteType == Type && a.Status == publish_id).ToList();
-                listOfNotes.AddRange(temp);
+                typeFilter = dbObj.SellerNotes.Where(a => a.NoteType == Type && a.Status == publish_id).ToList();
             }
-            if (Search != null)
+            if (Search != "")
             {
-                temp = dbObj.SellerNotes.Where(a =>
+                searchFilter = dbObj.SellerNotes.Where(a =>
                 a.Title.Contains(Search.Trim()) ||
                 a.Description.Contains(Search.Trim()) ||
                 a.UniversityName.Contains(Search.Trim()) ||
@@ -130,9 +132,10 @@ namespace NotesMarketPlace.Controllers
                 a.Course.Contains(Search.Trim()) ||
                 a.Professor.Contains(Search.Trim())
                 ).ToList();
-                listOfNotes.AddRange(temp);
+                
             }
 
+            listOfNotes = countryFilter.Intersect(categoryFilter).Intersect(ratingFilter).Intersect(universityFilter).Intersect(courseFilter).Intersect(typeFilter).Intersect(searchFilter).ToList();
             List<NoteViewModel> listOfNotesDetails1 = new List<NoteViewModel>();
 
             foreach (SellerNote note in listOfNotes.Distinct())
@@ -216,7 +219,7 @@ namespace NotesMarketPlace.Controllers
                  Value = x.ID.ToString()
              }).ToList();
 
-            List<SelectListItem> UniversityList = dbObj.SellerNotes
+            List<SelectListItem> UniversityList = dbObj.SellerNotes.Where(a => a.UniversityName != null)
              .Select(x =>
              new SelectListItem()
              {
@@ -224,7 +227,7 @@ namespace NotesMarketPlace.Controllers
                  Value = x.UniversityName
              }).Distinct().ToList();
 
-            List<SelectListItem> CourseList = dbObj.SellerNotes
+            List<SelectListItem> CourseList = dbObj.SellerNotes.Where(a => a.Course != null)
             .Select(x =>
             new SelectListItem()
             {
@@ -372,9 +375,9 @@ namespace NotesMarketPlace.Controllers
             model.MoneyEarned = Convert.ToInt32(listdo.Sum(a => a.PurchasedPrice));
             return View(model);
         }
+      
         [HttpGet]
         [Authorize(Roles = "Member")]
-
         public ActionResult SaveNotes()
         {
             AddNoteModel note = getAllList();
@@ -441,7 +444,7 @@ namespace NotesMarketPlace.Controllers
                 return View(model);
             }
 
-           
+
 
             try
             {
@@ -464,7 +467,7 @@ namespace NotesMarketPlace.Controllers
                 return View(model);
             }
 
-            note.SellerID = existUser.ID;
+
             note.Title = model.Title;
             note.Category = model.Category;
             note.NoteType = (model.NoteType != -1 ? model.NoteType : null);

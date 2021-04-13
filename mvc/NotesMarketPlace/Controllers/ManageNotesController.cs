@@ -1,8 +1,10 @@
-﻿using NotesMarketPlace.Context;
+﻿using Ionic.Zip;
+using NotesMarketPlace.Context;
 using NotesMarketPlace.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -109,19 +111,31 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpGet]
-        public void DownloadNote(int id)
+        public ActionResult DownloadNote(int id)
         {
             string email = User.Identity.Name;
             int buyerID = dbObj.Users.Where(a => a.EmailID == email).FirstOrDefault().ID;
             Download isExist = dbObj.Downloads.Where(a => a.NoteID == id && a.Downloader == buyerID).FirstOrDefault();
             isExist.IsAttachmentDownloaded = true;
             dbObj.SaveChanges();
-            SellerNotesAttachment note_att = dbObj.SellerNotesAttachments.Where(a => a.NoteID == id).FirstOrDefault();
+            using (ZipFile zip = new ZipFile())
+            {
+                zip.AlternateEncodingUsage = ZipOption.AsNecessary;
+                zip.AddDirectoryByName("Files");
+                List<SellerNotesAttachment> files = dbObj.SellerNotesAttachments.Where(a => a.NoteID == id).ToList();
+                string title = dbObj.SellerNotes.Where(a => a.ID == id).FirstOrDefault().Title;
+                foreach (SellerNotesAttachment file in files)
+                {
+                    zip.AddFile(Server.MapPath("~/" + file.FilePath), title);
+                }
+                string zipName = title + ".zip";
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    zip.Save(memoryStream);
+                    return File(memoryStream.ToArray(), "application/zip", zipName);
+                }
+            }
 
-            Response.ContentType = "Application/pdf";
-            Response.AppendHeader("Content-Disposition", "attachment; filename=" + note_att.FileName);
-            Response.TransmitFile(Server.MapPath("~/" + note_att.FilePath));
-            Response.End();
         }
 
         [HttpPost]
